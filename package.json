@@ -9,14 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@carbon/react": "^1.26.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",
+    "axios": "^1.3.5",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sass": "^1.51.0",
     "typescript": "5.0.4"
+  },
+  "overrides": {
+    "@carbon/react": {
+      "react": "^18",
+      "react-dom": "^18"
+    }
   }
 }
