@@ -10,7 +10,7 @@ const LoginStep1 = (props: LoginProps) => {
     <div className="login-form">
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <p style={{ fontSize: 20, marginBottom: 40 }}>
-        {`Don't have an account?`} <a href="#">Sign In</a>
+        {`Don't have an account? `} <a href="#">Sign In</a>
       </p>
       <div className="divider" />
       <div
