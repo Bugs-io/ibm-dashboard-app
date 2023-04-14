@@ -1,4 +1,3 @@
-declare module "@carbon/react" {
-  export const Button: any;
-  export const Checkbox: any;
-}
+/*declare module "carbon-components-react" {
+  export const Theme: any;
+}*/
