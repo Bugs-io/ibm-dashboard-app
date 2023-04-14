@@ -17,7 +17,10 @@ const LoginStep2 = (props: LoginProps) => {
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <p style={{ fontSize: 20, marginBottom: 40 }}>
         Logging in as username@ibm.com{" "}
-        <a style={{cursor: "pointer"}} onClick={() => props.swtichLoginStep(1)}>
+        <a
+          style={{ cursor: "pointer" }}
+          onClick={() => props.swtichLoginStep(1)}
+        >
           Not you?
         </a>
       </p>
@@ -30,13 +33,14 @@ const LoginStep2 = (props: LoginProps) => {
         }}
       >
         <p>Password</p>
-        <a
-          href="https://www.ibm.com/account/reg/us-en/reset-password"
-          target="_blank"
-          style={{ textAlign: "end" }}
-        >
-          Forgot password?
-        </a>
+        <p style={{ marginLeft: 16, textAlign: "end" }}>
+          <a
+            href="https://www.ibm.com/account/reg/us-en/reset-password"
+            target="_blank"
+          >
+            Forgot password?
+          </a>
+        </p>
       </div>
       <div style={{ marginBottom: 16 }}>
         <PasswordInput id="login-password" labelText="Password" hideLabel />

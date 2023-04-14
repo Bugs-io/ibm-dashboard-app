@@ -1,4 +1,4 @@
-import { TextInput, Button, Checkbox } from "carbon-components-react";
+import { TextInput, Button, Checkbox, Grid } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 
 interface LoginProps {
@@ -10,18 +10,25 @@ const LoginStep1 = (props: LoginProps) => {
     <div className="login-form">
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <p style={{ fontSize: 20, marginBottom: 40 }}>
-        Don't have an account? <a href="#">Sign In</a>
+        {`Don't have an account?`} <a href="#">Sign In</a>
       </p>
       <div className="divider" />
-      <div style={{ marginBottom: 16 }}>
-        <span style={{ fontSize: 16 }}>Continue with IBMid</span>
-        <a
-          href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html"
-          target="_blank"
-          style={{ float: "right" }}
-        >
-          Forgot ID?
-        </a>
+      <div
+        style={{
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <p>Continue with IBMid</p>
+        <p style={{ marginLeft: 16, textAlign: "end" }}>
+          <a
+            href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html"
+            target="_blank"
+          >
+            Forgot ID?
+          </a>
+        </p>
       </div>
       <TextInput
         id="login-username"
@@ -29,14 +36,16 @@ const LoginStep1 = (props: LoginProps) => {
         placeholder="username@ibm.com"
         style={{ marginBottom: 16 }}
       />
-      <Button
-        kind="primary"
-        renderIcon={ArrowRight}
-        style={{ marginBottom: 24 }}
-        onClick={() => props.switchLoginStep(2)}
-      >
-        Continue
-      </Button>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          kind="primary"
+          renderIcon={ArrowRight}
+          onClick={() => props.switchLoginStep(2)}
+          style={{ minWidth: "100%" }}
+        >
+          Continue
+        </Button>
+      </div>
       <Checkbox id="check-remember-id" labelText="Remember ID?" />
     </div>
   );
