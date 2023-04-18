@@ -1,2 +1,3 @@
 import { LoginStep1, LoginStep2 } from "./LoginSteps";
-export { LoginStep1, LoginStep2 };
+import LandingLayout from "./LandingLayout";
+export { LoginStep1, LoginStep2, LandingLayout };

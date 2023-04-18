@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { LoginStep1, LoginStep2 } from "@/components";
-
-import LandigLayout from "@/components/LandingLayout";
+import { LoginStep1, LoginStep2, LandingLayout } from "@/components";
 
 const Login = () => {
   const [loginStep, setLoginStep] = useState(1);
@@ -14,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <LandigLayout>
+    <LandingLayout>
       {loginStep === 1 ? (
         <LoginStep1 switchLoginStep={swtichLoginStep} />
       ) : (
@@ -23,7 +21,7 @@ const Login = () => {
           swtichLoginStep={swtichLoginStep}
         ></LoginStep2>
       )}
-    </LandigLayout>
+    </LandingLayout>
   );
 };
 
