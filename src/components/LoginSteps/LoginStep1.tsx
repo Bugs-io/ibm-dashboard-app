@@ -1,33 +1,33 @@
-import { TextInput, Button, Checkbox, Grid } from "carbon-components-react";
+import { TextInput, Button, Checkbox } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
+import styles from "./loging-steps.module.scss";
 
+import CarbonLink from "../CarbonLink";
 interface LoginProps {
   switchLoginStep: (step: number) => void;
 }
 
 const LoginStep1 = (props: LoginProps) => {
   return (
-    <div className="login-form">
+    <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
-      <p style={{ fontSize: 20, marginBottom: 40 }}>
-        {`Don't have an account? `} <a href="#">Sign In</a>
-      </p>
-      <div className="divider" />
-      <div
-        style={{
-          marginBottom: 16,
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <h4 style={{ marginBottom: 40 }}>
+        {`Don't have an account? `}{" "}
+        <CarbonLink href="#" className={styles.linkButton}>
+          Sign In
+        </CarbonLink>
+      </h4>
+      <div className={styles.divider} />
+
+      <div className={styles.inputLabelContainer}>
         <p>Continue with IBMid</p>
-        <p style={{ marginLeft: 16, textAlign: "end" }}>
-          <a
+        <p className={styles.inputLabelLink}>
+          <CarbonLink
             href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html"
             target="_blank"
           >
             Forgot ID?
-          </a>
+          </CarbonLink>
         </p>
       </div>
       <TextInput
@@ -41,7 +41,7 @@ const LoginStep1 = (props: LoginProps) => {
           kind="primary"
           renderIcon={ArrowRight}
           onClick={() => props.switchLoginStep(2)}
-          style={{ minWidth: "100%" }}
+          className={styles.buttonContainer}
         >
           Continue
         </Button>

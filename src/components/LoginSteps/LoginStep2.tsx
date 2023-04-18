@@ -1,10 +1,7 @@
 import { ArrowRight } from "@carbon/icons-react";
-import {
-  Button,
-  Checkbox,
-  TextInput,
-  PasswordInput,
-} from "carbon-components-react";
+import { Button, Checkbox, PasswordInput } from "carbon-components-react";
+import CarbonLink from "../CarbonLink";
+import styles from "./loging-steps.module.scss";
 
 interface LoginProps {
   handleClick: () => void;
@@ -13,33 +10,27 @@ interface LoginProps {
 
 const LoginStep2 = (props: LoginProps) => {
   return (
-    <div className="login-form">
+    <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
-      <p style={{ fontSize: 20, marginBottom: 40 }}>
+      <h4 style={{ marginBottom: 40 }}>
         Logging in as username@ibm.com{" "}
-        <a
-          style={{ cursor: "pointer" }}
+        <CarbonLink
           onClick={() => props.swtichLoginStep(1)}
+          className={styles.linkButton}
         >
           Not you?
-        </a>
-      </p>
-      <div className="divider" />
-      <div
-        style={{
-          marginBottom: 16,
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+        </CarbonLink>
+      </h4>
+      <div className={styles.divider} />
+      <div className={styles.inputLabelContainer}>
         <p>Password</p>
-        <p style={{ marginLeft: 16, textAlign: "end" }}>
-          <a
+        <p className={styles.inputLabelLink}>
+          <CarbonLink
             href="https://www.ibm.com/account/reg/us-en/reset-password"
             target="_blank"
           >
             Forgot password?
-          </a>
+          </CarbonLink>
         </p>
       </div>
       <div style={{ marginBottom: 16 }}>
@@ -48,8 +39,8 @@ const LoginStep2 = (props: LoginProps) => {
       <Button
         kind="primary"
         renderIcon={ArrowRight}
-        style={{ marginBottom: 24 }}
         onClick={props.handleClick}
+        className={styles.buttonContainer}
       >
         Log in
       </Button>
