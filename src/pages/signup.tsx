@@ -1,90 +1,63 @@
 import { useEffect, useState } from "react";
-import { LandingLayout } from "@/components";
-
-import { Button, Form, TextInput } from "carbon-components-react";
-import styles from "../components/LoginSteps/logingSteps.module.scss";
-import { ArrowRight } from "@carbon/icons-react";
-import CarbonLink from "@/components/CarbonLink";
 import Head from "next/head";
+import { Button, Form, TextInput, Tooltip } from "carbon-components-react";
+import { ArrowRight } from "@carbon/icons-react";
+import { LandingLayout } from "@/components";
+import CarbonLink from "@/components/CarbonLink";
+import styles from "../components/LoginSteps/logingSteps.module.scss";
 
-interface formErrors {
+import {
+  passwordStrengthMeter,
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePassword,
+} from "@/utils/signUpValidations";
+
+import PasswordStrengthMeter from "@/components/PasswordStrengthMeter";
+
+interface UserData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+
+interface FormErrors {
   [key: string]: string;
 }
 
-interface userData {
-  [key: string]: string;
+interface PasswordRequirements {
+  hasMinLength: boolean;
+  hasLetters: boolean;
+  hasNumbers: boolean;
 }
 
 const signup = () => {
-  const [userData, setUserData] = useState<userData>({
+  const [userData, setUserData] = useState<UserData>({
     email: "",
     firstName: "",
     lastName: "",
     password: "",
   });
 
-  const [formErrors, setFormErrors] = useState<formErrors>({
+  const [formErrors, setFormErrors] = useState<FormErrors>({
     email: "",
     firstName: "",
     lastName: "",
     password: "",
   });
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {};
+  const [passwordRequirements, setPasswordRequirements] =
+    useState<PasswordRequirements>({
+      hasMinLength: false,
+      hasLetters: false,
+      hasNumbers: false,
+    });
 
-  const validateEmail = () => {
-    let errorMessage = "";
-
-    if (!userData.email) {
-      errorMessage = "E-mail is required";
-    } else if (
-      !/^\s*[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\s*$/.test(
-        userData.email
-      )
-    ) {
-      errorMessage = "Invalid format (suggested: name@company.com)";
-    } else {
-      errorMessage = "";
-    }
-
-    setFormErrors((prevFormErrors) => ({
-      ...prevFormErrors,
-      email: errorMessage,
-    }));
-  };
-
-  const validateFirstName = () => {
-    let errorMessage = "";
-    if (!userData.firstName) {
-      errorMessage = "First name is required";
-    }
-    setFormErrors((prevFormErrors) => ({
-      ...prevFormErrors,
-      firstName: errorMessage,
-    }));
-  };
-
-  const validateLastName = () => {
-    let errorMessage = "";
-    if (!userData.lastName) {
-      errorMessage = "Last name is required";
-    }
-    setFormErrors((prevFormErrors) => ({
-      ...prevFormErrors,
-      lastName: errorMessage,
-    }));
-  };
-
-  const validatePassword = () => {
-    let errorMessage = "";
-    if (!userData.password) {
-      errorMessage = "Password is required";
-    }
-    setFormErrors((prevFormErrors) => ({
-      ...prevFormErrors,
-      password: errorMessage,
-    }));
-  };
+  useEffect(() => {
+    passwordStrengthMeter(userData.password, setPasswordRequirements);
+  }, [userData.password]);
 
   const handleChange = (
     field: string,
@@ -100,10 +73,10 @@ const signup = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (Object.keys(formErrors).every((key) => formErrors[key] === "")) {
-      validateEmail();
-      validateFirstName();
-      validateLastName();
-      validatePassword();
+      validateEmail(userData.email, setFormErrors);
+      validateFirstName(userData.firstName, setFormErrors);
+      validateLastName(userData.lastName, setFormErrors);
+      validatePassword(userData.password, setFormErrors);
       return;
     }
   };
@@ -117,15 +90,17 @@ const signup = () => {
         <div className={styles.loginForm}>
           <div
             style={{
-              marginBottom: 40,
               display: "flex",
               flexDirection: "column",
               gap: 4,
             }}
           >
-            <h2>Sign Up</h2>
-            <h4 style={{ marginBottom: 16 }}>
-              Please fill the following fields
+            <h2>Create an account</h2>
+            <h4 style={{ marginBottom: 40 }}>
+              Already have one?{" "}
+              <CarbonLink href="/login" className={styles.linkButton}>
+                Log in
+              </CarbonLink>
             </h4>
           </div>
           <div className={styles.divider} />
@@ -143,7 +118,7 @@ const signup = () => {
                 id="signup-email"
                 labelText="E-mail"
                 name="email"
-                onBlur={validateEmail}
+                onBlur={() => validateEmail(userData.email, setFormErrors)}
                 value={userData.email}
                 onChange={(val) => handleChange("email", val)}
                 invalid={formErrors.email !== ""}
@@ -157,7 +132,9 @@ const signup = () => {
                   labelText="First name"
                   value={userData.firstName}
                   onChange={(val) => handleChange("firstName", val)}
-                  onBlur={validateFirstName}
+                  onBlur={() =>
+                    validateFirstName(userData.firstName, setFormErrors)
+                  }
                   invalid={formErrors.firstName !== ""}
                   invalidText={formErrors.firstName}
                 />
@@ -168,21 +145,30 @@ const signup = () => {
                   labelText="Last name"
                   value={userData.lastName}
                   onChange={(val) => handleChange("lastName", val)}
-                  onBlur={validateLastName}
+                  onBlur={() =>
+                    validateLastName(userData.lastName, setFormErrors)
+                  }
                   invalid={formErrors.lastName !== ""}
                   invalidText={formErrors.lastName}
                 />
               </div>
-
-              <TextInput.PasswordInput
-                id="signup-passowrd"
-                name="password"
-                labelText="Password"
-                onBlur={validatePassword}
-                onChange={(e) => handleChange("password", e)}
-                invalid={formErrors.password !== ""}
-                invalidText={formErrors.password}
-              />
+              <Tooltip
+                label={
+                  <PasswordStrengthMeter requirements={passwordRequirements} />
+                }
+              >
+                <TextInput.PasswordInput
+                  id="signup-passowrd"
+                  name="password"
+                  labelText="Password"
+                  onBlur={() =>
+                    validatePassword(userData.password, setFormErrors)
+                  }
+                  onChange={(e) => handleChange("password", e)}
+                  invalid={formErrors.password !== ""}
+                  invalidText={formErrors.password}
+                />
+              </Tooltip>
             </div>
 
             <Button
@@ -194,9 +180,6 @@ const signup = () => {
             >
               Create account
             </Button>
-            <p style={{ textAlign: "end" }}>
-              Have an account? <CarbonLink href="/login">Log in</CarbonLink>
-            </p>
           </Form>
         </div>
       </LandingLayout>

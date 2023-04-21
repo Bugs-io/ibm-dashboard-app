@@ -12,9 +12,9 @@ const LoginStep1 = (props: LoginProps) => {
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <h4 style={{ marginBottom: 40 }}>
-        {`Don't have an account? `}{" "}
+        Don't have an account?{" "}
         <CarbonLink href="/signup" className={styles.linkButton}>
-          Sign In
+          Sign up
         </CarbonLink>
       </h4>
       <div className={styles.divider} />
