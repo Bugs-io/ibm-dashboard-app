@@ -13,7 +13,7 @@ const LoginStep1 = (props: LoginProps) => {
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <h4 style={{ marginBottom: 40 }}>
         {`Don't have an account? `}{" "}
-        <CarbonLink href="#" className={styles.linkButton}>
+        <CarbonLink href="/signup" className={styles.linkButton}>
           Sign In
         </CarbonLink>
       </h4>
