@@ -1,5 +1,7 @@
 import { CloseOutline, CheckmarkOutline } from "@carbon/icons-react";
 
+import styles from "./styles.module.scss";
+
 interface props {
   requirements: {
     hasMinLength: boolean;
@@ -19,21 +21,8 @@ const CheckmarkOutlineColored = () => {
 const PasswordStrengthMeter = ({ requirements }: props) => {
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-          color: "#000",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
+      <div className={styles.container}>
+        <div className={styles.check}>
           {requirements.hasMinLength ? (
             <CheckmarkOutlineColored />
           ) : (
@@ -42,13 +31,7 @@ const PasswordStrengthMeter = ({ requirements }: props) => {
           <p>At least 6 characters</p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
+        <div className={styles.check}>
           {requirements.hasLetters ? (
             <CheckmarkOutlineColored />
           ) : (
@@ -57,13 +40,7 @@ const PasswordStrengthMeter = ({ requirements }: props) => {
           <p>A letter</p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
+        <div className={styles.check}>
           {requirements.hasNumbers ? (
             <CheckmarkOutlineColored />
           ) : (

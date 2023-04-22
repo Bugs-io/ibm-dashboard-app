@@ -4,15 +4,15 @@ import { Button, Form, TextInput, Tooltip } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 import { LandingLayout } from "@/components";
 import CarbonLink from "@/components/CarbonLink";
-import styles from "../components/LoginSteps/logingSteps.module.scss";
+import styles from "@/styles/LandingForm.module.scss";
 
 import {
-  passwordStrengthMeter,
+  isPasswordStrong,
   validateEmail,
   validateFirstName,
   validateLastName,
   validatePassword,
-} from "@/utils/signUpValidations";
+} from "../utils/SignUpValidations";
 
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter";
 
@@ -56,7 +56,7 @@ const signup = () => {
     });
 
   useEffect(() => {
-    passwordStrengthMeter(userData.password, setPasswordRequirements);
+    isPasswordStrong(userData.password, setPasswordRequirements);
   }, [userData.password]);
 
   const handleChange = (
@@ -76,9 +76,15 @@ const signup = () => {
       validateEmail(userData.email, setFormErrors);
       validateFirstName(userData.firstName, setFormErrors);
       validateLastName(userData.lastName, setFormErrors);
-      validatePassword(userData.password, setFormErrors);
+      validatePassword(
+        userData.password,
+        setFormErrors,
+        setPasswordRequirements
+      );
+      console.log("TODO: ohnonono");
       return;
     }
+    console.log("TODO: POST SIGNUP");
   };
 
   return (
@@ -162,7 +168,11 @@ const signup = () => {
                   name="password"
                   labelText="Password"
                   onBlur={() =>
-                    validatePassword(userData.password, setFormErrors)
+                    validatePassword(
+                      userData.password,
+                      setFormErrors,
+                      setPasswordRequirements
+                    )
                   }
                   onChange={(e) => handleChange("password", e)}
                   invalid={formErrors.password !== ""}
