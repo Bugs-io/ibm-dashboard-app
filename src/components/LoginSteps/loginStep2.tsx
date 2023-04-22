@@ -1,7 +1,7 @@
 import { ArrowRight } from "@carbon/icons-react";
-import { Button, Checkbox, PasswordInput } from "carbon-components-react";
+import { Button, PasswordInput } from "carbon-components-react";
 import CarbonLink from "../CarbonLink";
-import styles from "./logingSteps.module.scss";
+import styles from "@/styles/LandingForm.module.scss";
 
 interface LoginProps {
   handleClick: () => void;
