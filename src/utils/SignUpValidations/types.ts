@@ -1,5 +1,8 @@
 export interface UserData {
-  [key: string]: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  password: string;
 }
 
 export interface FormErrors {

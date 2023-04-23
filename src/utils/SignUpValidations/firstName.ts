@@ -1,6 +1,6 @@
 import { FormErrors } from "./types";
 
-export const validateFirstName = (
+export const isFirstNameValid = (
   firstName: string,
   setFormErrors: React.Dispatch<React.SetStateAction<FormErrors>>
 ) => {
@@ -12,4 +12,6 @@ export const validateFirstName = (
     ...prevFormErrors,
     firstName: errorMessage,
   }));
+
+  return errorMessage === "";
 };

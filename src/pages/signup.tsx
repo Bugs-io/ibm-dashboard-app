@@ -7,31 +7,20 @@ import CarbonLink from "@/components/CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 
 import {
+  isEmailValid,
+  isFirstNameValid,
+  isLastNameValid,
   isPasswordStrong,
-  validateEmail,
-  validateFirstName,
-  validateLastName,
-  validatePassword,
+  isPasswordValid,
 } from "../utils/SignUpValidations";
 
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter";
 
-interface UserData {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-}
-
-interface FormErrors {
-  [key: string]: string;
-}
-
-interface PasswordRequirements {
-  hasMinLength: boolean;
-  hasLetters: boolean;
-  hasNumbers: boolean;
-}
+import {
+  UserData,
+  FormErrors,
+  PasswordRequirements,
+} from "@/utils/SignUpValidations/types";
 
 const signup = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -63,25 +52,25 @@ const signup = () => {
     field: string,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { value } = e.target;
+    const { value, name } = e.target;
     setUserData((prevUserData) => ({
       ...prevUserData,
-      [field]: value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    if (Object.keys(formErrors).every((key) => formErrors[key] === "")) {
-      validateEmail(userData.email, setFormErrors);
-      validateFirstName(userData.firstName, setFormErrors);
-      validateLastName(userData.lastName, setFormErrors);
-      validatePassword(
+    if (
+      !isEmailValid(userData.email, setFormErrors) ||
+      !isFirstNameValid(userData.firstName!, setFormErrors) ||
+      !isLastNameValid(userData.lastName!, setFormErrors) ||
+      !isPasswordValid(
         userData.password,
         setFormErrors,
         setPasswordRequirements
-      );
-      console.log("TODO: ohnonono");
+      )
+    ) {
       return;
     }
     console.log("TODO: POST SIGNUP");
@@ -112,19 +101,12 @@ const signup = () => {
           <div className={styles.divider} />
 
           <Form>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-                marginBottom: 24,
-              }}
-            >
+            <div className={styles.form}>
               <TextInput
                 id="signup-email"
                 labelText="E-mail"
                 name="email"
-                onBlur={() => validateEmail(userData.email, setFormErrors)}
+                onBlur={() => isEmailValid(userData.email, setFormErrors)}
                 value={userData.email}
                 onChange={(val) => handleChange("email", val)}
                 invalid={formErrors.email !== ""}
@@ -139,7 +121,7 @@ const signup = () => {
                   value={userData.firstName}
                   onChange={(val) => handleChange("firstName", val)}
                   onBlur={() =>
-                    validateFirstName(userData.firstName, setFormErrors)
+                    isFirstNameValid(userData.firstName!, setFormErrors)
                   }
                   invalid={formErrors.firstName !== ""}
                   invalidText={formErrors.firstName}
@@ -152,12 +134,13 @@ const signup = () => {
                   value={userData.lastName}
                   onChange={(val) => handleChange("lastName", val)}
                   onBlur={() =>
-                    validateLastName(userData.lastName, setFormErrors)
+                    isFirstNameValid(userData.lastName!, setFormErrors)
                   }
                   invalid={formErrors.lastName !== ""}
                   invalidText={formErrors.lastName}
                 />
               </div>
+
               <Tooltip
                 label={
                   <PasswordStrengthMeter requirements={passwordRequirements} />
@@ -168,7 +151,7 @@ const signup = () => {
                   name="password"
                   labelText="Password"
                   onBlur={() =>
-                    validatePassword(
+                    isPasswordValid(
                       userData.password,
                       setFormErrors,
                       setPasswordRequirements
@@ -177,6 +160,7 @@ const signup = () => {
                   onChange={(e) => handleChange("password", e)}
                   invalid={formErrors.password !== ""}
                   invalidText={formErrors.password}
+                  value={userData.password}
                 />
               </Tooltip>
             </div>

@@ -8,7 +8,7 @@ interface PasswordRequirements {
   hasNumbers: boolean;
 }
 
-export const validatePassword = (
+export const isPasswordValid = (
   password: string,
   setFormErrors: React.Dispatch<React.SetStateAction<FormErrors>>,
   setPasswordRequirements: React.Dispatch<
@@ -26,6 +26,8 @@ export const validatePassword = (
     ...prevFormErrors,
     password: errorMessage,
   }));
+
+  return errorMessage === "";
 };
 
 export const isPasswordStrong = (
