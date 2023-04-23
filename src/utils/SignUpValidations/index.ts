@@ -1,12 +1,12 @@
-import { validateEmail } from "./email";
-import { validateFirstName } from "./firstName";
-import { validateLastName } from "./lastName";
-import { validatePassword, isPasswordStrong } from "./password";
+import { isEmailValid } from "./email";
+import { isFirstNameValid } from "./firstName";
+import { isLastNameValid } from "./lastName";
+import { isPasswordValid, isPasswordStrong } from "./password";
 
 export {
-  validateEmail,
-  validateFirstName,
-  validateLastName,
-  validatePassword,
+  isEmailValid,
+  isFirstNameValid,
+  isLastNameValid,
+  isPasswordValid,
   isPasswordStrong,
 };

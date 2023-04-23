@@ -3,11 +3,16 @@ import { ArrowRight } from "@carbon/icons-react";
 import styles from "@/styles/LandingForm.module.scss";
 
 import CarbonLink from "../CarbonLink";
-interface LoginProps {
-  switchLoginStep: (step: number) => void;
+import { UserData } from "@/utils/SignUpValidations/types";
+
+interface Props {
+  handleClick: () => void;
+  handleChange: (field: string, e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputError: string;
+  loginData: UserData;
 }
 
-const LoginStep1 = (props: LoginProps) => {
+const LoginStep1 = (props: Props) => {
   return (
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
@@ -17,30 +22,36 @@ const LoginStep1 = (props: LoginProps) => {
           Sign up
         </CarbonLink>
       </h4>
+
       <div className={styles.divider} />
 
-      <div className={styles.inputLabelContainer}>
-        <p>Continue with IBMid</p>
-        <p className={styles.inputLabelLink}>
-          <CarbonLink
-            href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html"
-            target="_blank"
-          >
-            Forgot ID?
-          </CarbonLink>
-        </p>
+      <div className={styles.form}>
+        <div className={styles.inputLabelContainer}>
+          <p>Continue with IBMid</p>
+          <p className={styles.inputLabelLink}>
+            <CarbonLink
+              href="https://www.ibm.com/ibmid/myibm/help/us/helpdesk.html"
+              target="_blank"
+            >
+              Forgot ID?
+            </CarbonLink>
+          </p>
+        </div>
+        <TextInput
+          id="login-username"
+          value={props.loginData.email}
+          labelText=""
+          placeholder="username@ibm.com"
+          onChange={(e) => props.handleChange("email", e)}
+          invalid={props.inputError !== ""}
+          invalidText={props.inputError}
+        />
       </div>
-      <TextInput
-        id="login-username"
-        labelText=""
-        placeholder="username@ibm.com"
-        style={{ marginBottom: 16 }}
-      />
       <div style={{ marginBottom: 16 }}>
         <Button
           kind="primary"
           renderIcon={ArrowRight}
-          onClick={() => props.switchLoginStep(2)}
+          onClick={() => props.handleClick()}
           className={styles.buttonContainer}
         >
           Continue

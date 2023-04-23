@@ -1,6 +1,6 @@
 import { FormErrors } from "./types.ts";
 
-export const validateEmail = (
+export const isEmailValid = (
   email: string,
   setFormErrors: React.Dispatch<React.SetStateAction<FormErrors>>
 ) => {
@@ -20,4 +20,6 @@ export const validateEmail = (
     ...prevFormErrors,
     email: errorMessage,
   }));
+
+  return errorMessage === "";
 };
