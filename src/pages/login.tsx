@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LoginStep1, LoginStep2, LandingLayout } from "@/components";
-import { validateEmail } from "@/utils/SignUpValidations";
 import Head from "next/head";
 
 import { UserData, FormErrors } from "@/utils/SignUpValidations/types";
@@ -18,7 +17,15 @@ const Login = () => {
     password: "",
   });
 
-  const handleClickStep1 = () => {
+  const handleSubmitStep1 = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setLoginData((prevLoginData) => ({
+      ...prevLoginData,
+      password: "",
+    }));
+
     if (!loginData.email) {
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
@@ -30,16 +37,8 @@ const Login = () => {
     setLoginStep(2);
   };
 
-  const handleStepBack = () => {
-    setLoginStep(1);
-    setLoginData(prevLoginData);
-  };
-
-  const handleChange = (
-    field: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
     if (loginData.email !== "") {
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
@@ -48,11 +47,12 @@ const Login = () => {
     }
     setLoginData((prevLoginData) => ({
       ...prevLoginData,
-      [field]: value,
+      [name]: value,
     }));
   };
 
   const handleLogin = () => {
+    console.log(loginData);
     console.log("TODO: POST Log In");
   };
 
@@ -65,13 +65,13 @@ const Login = () => {
         {loginStep === 1 ? (
           <LoginStep1
             handleChange={handleChange}
-            handleClick={handleClickStep1}
+            handleSubmit={handleSubmitStep1}
             inputError={formErrors.email}
             loginData={loginData}
           />
         ) : (
           <LoginStep2
-            handleClick={handleLogin}
+            handleSubmit={handleLogin}
             switchLoginStep={() => setLoginStep(1)}
             handleChange={handleChange}
             loginData={loginData}

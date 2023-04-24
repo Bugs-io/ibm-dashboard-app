@@ -48,10 +48,7 @@ const signup = () => {
     isPasswordStrong(userData.password, setPasswordRequirements);
   }, [userData.password]);
 
-  const handleChange = (
-    field: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setUserData((prevUserData) => ({
       ...prevUserData,
@@ -73,6 +70,8 @@ const signup = () => {
     ) {
       return;
     }
+
+    console.log(userData);
     console.log("TODO: POST SIGNUP");
   };
 
@@ -108,7 +107,7 @@ const signup = () => {
                 name="email"
                 onBlur={() => isEmailValid(userData.email, setFormErrors)}
                 value={userData.email}
-                onChange={(val) => handleChange("email", val)}
+                onChange={(e) => handleChange(e)}
                 invalid={formErrors.email !== ""}
                 invalidText={formErrors.email}
               />
@@ -119,7 +118,7 @@ const signup = () => {
                   name="firstName"
                   labelText="First name"
                   value={userData.firstName}
-                  onChange={(val) => handleChange("firstName", val)}
+                  onChange={(e) => handleChange(e)}
                   onBlur={() =>
                     isFirstNameValid(userData.firstName!, setFormErrors)
                   }
@@ -132,7 +131,7 @@ const signup = () => {
                   name="lastName"
                   labelText="Last name"
                   value={userData.lastName}
-                  onChange={(val) => handleChange("lastName", val)}
+                  onChange={(e) => handleChange(e)}
                   onBlur={() =>
                     isFirstNameValid(userData.lastName!, setFormErrors)
                   }
@@ -157,7 +156,7 @@ const signup = () => {
                       setPasswordRequirements
                     )
                   }
-                  onChange={(e) => handleChange("password", e)}
+                  onChange={(e) => handleChange(e)}
                   invalid={formErrors.password !== ""}
                   invalidText={formErrors.password}
                   value={userData.password}
