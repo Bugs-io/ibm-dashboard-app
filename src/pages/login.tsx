@@ -4,7 +4,11 @@ import Head from "next/head";
 
 import { UserData, FormErrors } from "@/utils/SignUpValidations/types";
 
+import useClient from "@/hooks/useClient";
+
 const Login = () => {
+  const client = useClient();
+
   const [loginStep, setLoginStep] = useState(1);
 
   const [loginData, setLoginData] = useState<UserData>({
@@ -51,9 +55,12 @@ const Login = () => {
     }));
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log(loginData);
     console.log("TODO: POST Log In");
+    console.log("THE FOLLOWING IS ONLY A PLACEHOLDER");
+    const res = await client.helloWorld();
+    console.log(res);
   };
 
   return (
