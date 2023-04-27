@@ -8,6 +8,7 @@ interface Props {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   switchLoginStep: () => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputError: string;
   loginData: { email: string; password: string };
 }
 
@@ -50,14 +51,17 @@ const LoginStep2 = (props: Props) => {
               labelText="Password"
               hideLabel
               onChange={(e) => props.handleChange(e)}
+              invalid={props.inputError !== ""}
+              invalidText={props.inputError}
             />
           </div>
         </div>
         <Button
           kind="primary"
           renderIcon={ArrowRight}
-          onClick={props.handleSubmit}
+          onClick={(e) => props.handleSubmit(e)}
           className={styles.buttonContainer}
+          type="submit"
         >
           Log in
         </Button>
