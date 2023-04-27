@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Button, Form, TextInput, Tooltip } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 import { LandingLayout } from "@/components";
-import CarbonLink from "@/components/CarbonLink";
+import CarbonLink from "@/components/CarbonLink"
 import styles from "@/styles/LandingForm.module.scss";
 
 import {
@@ -22,7 +22,7 @@ import {
   PasswordRequirements,
 } from "@/utils/SignUpValidations/types";
 
-const signup = () => {
+const Signup = () => {
   const [userData, setUserData] = useState<UserData>({
     email: "",
     firstName: "",
@@ -180,4 +180,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;

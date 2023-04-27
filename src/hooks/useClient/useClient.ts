@@ -5,7 +5,7 @@ import HTTPClient from "./httpClient";
 const useClient = (): HTTPClient => {
   const accessToken = "";
   const client = useMemo(
-    () => new HTTPClient("https://jsonplaceholder.typicode.com", accessToken),
+    () => new HTTPClient("http://localhost:8000", accessToken),
     [accessToken]
   );
 
