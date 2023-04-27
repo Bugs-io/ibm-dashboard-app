@@ -68,6 +68,19 @@ class HTTPClient {
       throw error;
     }
   };
+
+  public login = async (
+    email: string,
+    password: string
+  ): Promise<{ userId: string; userEmail: string; accessToken: string }> => {
+    const { id, emailResponse, access } = await this.instance.post<{
+      id: string;
+      emailResponse: string;
+      access: string;
+    }>("/login", { email, password });
+
+    return { userId: id, userEmail: emailResponse, accessToken: access };
+  };
 }
 
 export default HTTPClient;

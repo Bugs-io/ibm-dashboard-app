@@ -5,6 +5,7 @@ import Head from "next/head";
 import { UserData, FormErrors } from "@/utils/SignUpValidations/types";
 
 import useClient from "@/hooks/useClient";
+import axios from "axios";
 
 const Login = () => {
   const client = useClient();
@@ -58,9 +59,8 @@ const Login = () => {
   const handleLogin = async () => {
     console.log(loginData);
     console.log("TODO: POST Log In");
-    console.log("THE FOLLOWING IS ONLY A PLACEHOLDER");
-    const res = await client.helloWorld();
-    console.log(res);
+    const res = await client.login(loginData.email, loginData.password);
+    await console.log(res);
   };
 
   return (
