@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Button, Form, TextInput, Tooltip } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 import { LandingLayout } from "@/components";
-import CarbonLink from "@/components/CarbonLink"
+import CarbonLink from "@/components/CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 
 import {
@@ -20,9 +20,21 @@ import {
   UserData,
   FormErrors,
   PasswordRequirements,
+  ServerErrorMessages,
 } from "@/utils/SignUpValidations/types";
+import useClient from "@/hooks/useClient";
+import { AxiosError } from "axios";
+
+const serverErrorMessages: ServerErrorMessages = {
+  USER_ALREADY_EXISTS: "This user already exists.",
+  INVALID_EMAIL: "Please use a valid IBMid.",
+  USER_CREATION_ERROR: "There was an error while creating this account.",
+  default: "Something went wrong.",
+};
 
 const Signup = () => {
+  const client = useClient();
+
   const [userData, setUserData] = useState<UserData>({
     email: "",
     firstName: "",
@@ -56,7 +68,9 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     if (
       !isEmailValid(userData.email, setFormErrors) ||
@@ -71,8 +85,27 @@ const Signup = () => {
       return;
     }
 
-    console.log(userData);
-    console.log("TODO: POST SIGNUP");
+    try {
+      const res = await client.signup(
+        userData.email,
+        userData.firstName!,
+        userData.lastName!,
+        userData.password
+      );
+      console.log(res);
+    } catch (error) {
+      let errorMsg = "";
+      if (error instanceof AxiosError) {
+        const errorCode = error.response?.data.error_code;
+        errorMsg =
+          serverErrorMessages[errorCode] || serverErrorMessages.default;
+      }
+
+      setFormErrors((prevFormErrors) => ({
+        ...prevFormErrors,
+        password: errorMsg,
+      }));
+    }
   };
 
   return (

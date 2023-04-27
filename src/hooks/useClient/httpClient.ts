@@ -53,33 +53,32 @@ class HTTPClient {
 
   private readonly _handleError = async (error: AxiosError): Promise<any> => {
     //ONLY WHEN NOT A PRODUCTION ENV!
-    console.log(error.response?.data);
+    console.log("from httpClient _handleError:", error.response?.data);
 
     return await Promise.reject(error);
   };
 
-  public helloWorld = async (): Promise<HelloWorldResponse | null> => {
-    try {
-      return this.instance.get("/posts/1");
-    } catch (error) {
-      if ((error as AxiosError).response?.status === 409) {
-        return null;
-      }
-      throw error;
-    }
-  };
-
-  public login = async (
-    email: string,
-    password: string
-  ): Promise<{ userId: string; userEmail: string; accessToken: string }> => {
-    const { id, emailResponse, access } = await this.instance.post<{
+  public login = async (email: string, password: string): Promise<any> => {
+    const res = await this.instance.post<{
       id: string;
       emailResponse: string;
       access: string;
     }>("/login", { email, password });
+    return res;
+  };
 
-    return { userId: id, userEmail: emailResponse, accessToken: access };
+  public signup = async (
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string
+  ): Promise<any> => {
+    const res = await this.instance.post<{
+      id: string;
+      emailResponse: string;
+      access: string;
+    }>("/signup", { email, password });
+    return res;
   };
 }
 
