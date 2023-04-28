@@ -1,5 +1,10 @@
 import { ArrowRight } from "@carbon/icons-react";
-import { Button, Form, TextInput } from "carbon-components-react";
+import {
+  Button,
+  Form,
+  TextInput,
+  InlineLoading,
+} from "carbon-components-react";
 import CarbonLink from "../CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 import utilStyle from "@/styles/utils.module.scss";
@@ -10,6 +15,7 @@ interface Props {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputError: string;
   loginData: { email: string; password: string };
+  loadingStatus: string | undefined;
 }
 
 const LoginStep2 = (props: Props) => {
@@ -43,7 +49,7 @@ const LoginStep2 = (props: Props) => {
             </p>
           </div>
 
-          <div style={{ marginBottom: 16 }}>
+          <div>
             <TextInput.PasswordInput
               id="login-password"
               name="password"
@@ -53,6 +59,7 @@ const LoginStep2 = (props: Props) => {
               onChange={(e) => props.handleChange(e)}
               invalid={props.inputError !== ""}
               invalidText={props.inputError}
+              autoFocus
             />
           </div>
         </div>
@@ -63,7 +70,10 @@ const LoginStep2 = (props: Props) => {
           className={styles.buttonContainer}
           type="submit"
         >
-          Log in
+          <div className={styles.buttonContent}>
+            <p>Log in </p>
+            <InlineLoading style={{ width: "auto" }} status={props.loadingStatus} />
+          </div>
         </Button>
       </Form>
     </div>

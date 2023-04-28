@@ -31,6 +31,14 @@
   margin-bottom: 16px;
 }
 
+.buttonContent {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  gap: 16px;
+  place-items: center;
+}
+
 .form {
   display: flex;
   flex-direction: column;

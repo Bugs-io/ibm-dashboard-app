@@ -2,23 +2,17 @@ import { useState } from "react";
 import { LoginStep1, LoginStep2, LandingLayout } from "@/components";
 import Head from "next/head";
 
-import {
-  UserData,
-  FormErrors,
-  ServerErrorMessages,
-} from "@/utils/SignUpValidations/types";
+import { UserData, FormErrors } from "@/utils/SignUpValidations/types";
 
 import useClient from "@/hooks/useClient";
 import { AxiosError } from "axios";
-
-const serverErrorMessages: ServerErrorMessages = {
-  INVALID_PASSWORD: "Invalid IBMid or password. Please try again.",
-  USER_DOES_NOT_EXIST: "User not found.",
-  default: "Something went wrong",
-};
+import { LoadingStatus } from "@/utils/inlineLoadingStatus";
+import { serverErrorMessages } from "@/utils/serverErrorMessages";
 
 const Login = () => {
   const client = useClient();
+
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
 
   const [loginStep, setLoginStep] = useState(1);
 
@@ -73,13 +67,16 @@ const Login = () => {
     let errorMsg = "";
 
     try {
+      setLoadingStatus("active");
       const res = await client.login(loginData.email, loginData.password);
-      console.log(res);
+      setLoadingStatus("inactive");
     } catch (error) {
+      setLoadingStatus("inactive");
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
+        console.log("login", errorCode);
         errorMsg =
-          serverErrorMessages[errorCode] || serverErrorMessages.default;
+          serverErrorMessages.login[errorCode] || serverErrorMessages.default;
       }
     }
 
@@ -118,6 +115,7 @@ const Login = () => {
             inputError={formErrors.password}
             handleChange={handleChange}
             loginData={loginData}
+            loadingStatus={loadingStatus}
           />
         )}
       </LandingLayout>
