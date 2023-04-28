@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { Button, Form, TextInput, Tooltip } from "carbon-components-react";
+import {
+  Button,
+  Form,
+  InlineLoading,
+  TextInput,
+  Tooltip,
+} from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 import { LandingLayout } from "@/components";
 import CarbonLink from "@/components/CarbonLink";
@@ -20,17 +26,11 @@ import {
   UserData,
   FormErrors,
   PasswordRequirements,
-  ServerErrorMessages,
 } from "@/utils/SignUpValidations/types";
 import useClient from "@/hooks/useClient";
 import { AxiosError } from "axios";
-
-const serverErrorMessages: ServerErrorMessages = {
-  USER_ALREADY_EXISTS: "This user already exists.",
-  INVALID_EMAIL: "Please use a valid IBMid.",
-  USER_CREATION_ERROR: "There was an error while creating this account.",
-  default: "Something went wrong.",
-};
+import { LoadingStatus } from "@/utils/inlineLoadingStatus";
+import { serverErrorMessages } from "@/utils/serverErrorMessages";
 
 const Signup = () => {
   const client = useClient();
@@ -55,6 +55,8 @@ const Signup = () => {
       hasLetters: false,
       hasNumbers: false,
     });
+
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
 
   useEffect(() => {
     isPasswordStrong(userData.password, setPasswordRequirements);
@@ -86,20 +88,24 @@ const Signup = () => {
     }
 
     try {
+      setLoadingStatus("active");
       const res = await client.signup(
         userData.email,
         userData.firstName!,
         userData.lastName!,
         userData.password
       );
-      console.log(res);
+      setLoadingStatus("inactive");
     } catch (error) {
       let errorMsg = "";
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
+        console.log("signup", errorCode);
         errorMsg =
-          serverErrorMessages[errorCode] || serverErrorMessages.default;
+          serverErrorMessages.signup[errorCode] || serverErrorMessages.default;
       }
+
+      setLoadingStatus("inactive");
 
       setFormErrors((prevFormErrors) => ({
         ...prevFormErrors,
@@ -204,7 +210,14 @@ const Signup = () => {
               onClick={(e) => handleSubmit(e)}
               className={styles.buttonContainer}
             >
-              Create account
+              <div className={styles.buttonContent}
+              >
+                <p>Create account</p>
+                <InlineLoading
+                  style={{ width: "auto" }}
+                  status={loadingStatus}
+                />
+              </div>
             </Button>
           </Form>
         </div>

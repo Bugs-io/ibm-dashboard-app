@@ -14,7 +14,3 @@ export interface PasswordRequirements {
   hasLetters: boolean;
   hasNumbers: boolean;
 }
-
-export interface ServerErrorMessages {
-  [key: string]: string;
-};
