@@ -31,6 +31,7 @@ import useClient from "@/hooks/useClient";
 import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
+import SignUpModal from "@/components/SignUpModal";
 
 const Signup = () => {
   const client = useClient();
@@ -57,6 +58,8 @@ const Signup = () => {
     });
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
+
+  const [signupSucces, setSignupSuccess] = useState(false);
 
   useEffect(() => {
     isPasswordStrong(userData.password, setPasswordRequirements);
@@ -96,6 +99,7 @@ const Signup = () => {
         userData.password
       );
       setLoadingStatus("inactive");
+      setSignupSuccess(true);
     } catch (error) {
       let errorMsg = "";
       if (error instanceof AxiosError) {
@@ -210,8 +214,7 @@ const Signup = () => {
               onClick={(e) => handleSubmit(e)}
               className={styles.buttonContainer}
             >
-              <div className={styles.buttonContent}
-              >
+              <div className={styles.buttonContent}>
                 <p>Create account</p>
                 <InlineLoading
                   style={{ width: "auto" }}
@@ -221,6 +224,7 @@ const Signup = () => {
             </Button>
           </Form>
         </div>
+        <SignUpModal isActive={signupSucces} />
       </LandingLayout>
     </>
   );
