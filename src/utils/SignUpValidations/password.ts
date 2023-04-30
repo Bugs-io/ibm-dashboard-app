@@ -8,28 +8,6 @@ interface PasswordRequirements {
   hasNumbers: boolean;
 }
 
-export const isPasswordValid = (
-  password: string,
-  setFormErrors: React.Dispatch<React.SetStateAction<FormErrors>>,
-  setPasswordRequirements: React.Dispatch<
-    React.SetStateAction<PasswordRequirements>
-  >
-) => {
-  let errorMessage = "";
-  if (!password) {
-    errorMessage = "Password is required";
-  } else if (isPasswordStrong(password, setPasswordRequirements) === false) {
-    errorMessage = "Invalid password (not strong enough)";
-  }
-
-  setFormErrors((prevFormErrors) => ({
-    ...prevFormErrors,
-    password: errorMessage,
-  }));
-
-  return errorMessage === "";
-};
-
 export const isPasswordStrong = (
   password: string,
   setPasswordRequirements: React.Dispatch<
@@ -63,4 +41,26 @@ export const isPasswordStrong = (
   }));
 
   return checks.length && checks.letter && checks.number;
+};
+
+export const isPasswordValid = (
+  password: string,
+  setFormErrors: React.Dispatch<React.SetStateAction<FormErrors>>,
+  setPasswordRequirements: React.Dispatch<
+    React.SetStateAction<PasswordRequirements>
+  >
+) => {
+  let errorMessage = "";
+  if (!password) {
+    errorMessage = "Password is required";
+  } else if (isPasswordStrong(password, setPasswordRequirements) === false) {
+    errorMessage = "Invalid password (not strong enough)";
+  }
+
+  setFormErrors((prevFormErrors) => ({
+    ...prevFormErrors,
+    password: errorMessage,
+  }));
+
+  return errorMessage === "";
 };

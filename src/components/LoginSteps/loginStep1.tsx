@@ -2,8 +2,8 @@ import { TextInput, Button, Checkbox, Form } from "carbon-components-react";
 import { ArrowRight } from "@carbon/icons-react";
 import styles from "@/styles/LandingForm.module.scss";
 
-import CarbonLink from "../CarbonLink";
 import { UserData } from "@/utils/SignUpValidations/types";
+import CarbonLink from "../CarbonLink";
 
 interface Props {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -12,7 +12,7 @@ interface Props {
   loginData: UserData;
 }
 
-const LoginStep1 = (props: Props) => {
+function LoginStep1({loginData, inputError, handleChange, handleSubmit}: Props) {
   return (
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
@@ -41,19 +41,19 @@ const LoginStep1 = (props: Props) => {
           <TextInput
             id="login-email"
             name="email"
-            value={props.loginData.email}
+            value={loginData.email}
             labelText=""
             placeholder="username@ibm.com"
-            onChange={(e) => props.handleChange(e)}
-            invalid={props.inputError !== ""}
-            invalidText={props.inputError}
+            onChange={(e) => handleChange(e)}
+            invalid={inputError !== ""}
+            invalidText={inputError}
           />
         </div>
         <div style={{ marginBottom: 16 }}>
           <Button
             kind="primary"
             renderIcon={ArrowRight}
-            onClick={(e) => props.handleSubmit(e)}
+            onClick={(e) => handleSubmit(e)}
             className={styles.buttonContainer}
             type="submit"
           >
@@ -64,6 +64,6 @@ const LoginStep1 = (props: Props) => {
       </Form>
     </div>
   );
-};
+}
 
 export default LoginStep1;

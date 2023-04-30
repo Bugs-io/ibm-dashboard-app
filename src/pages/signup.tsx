@@ -12,13 +12,6 @@ import { LandingLayout } from "@/components";
 import CarbonLink from "@/components/CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 
-import {
-  isEmailValid,
-  isFirstNameValid,
-  isLastNameValid,
-  isPasswordStrong,
-  isPasswordValid,
-} from "../utils/SignUpValidations";
 
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter";
 
@@ -31,8 +24,15 @@ import useClient from "@/hooks/useClient";
 import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
+import {
+  isEmailValid,
+  isFirstNameValid,
+  isLastNameValid,
+  isPasswordStrong,
+  isPasswordValid,
+} from "../utils/SignUpValidations";
 
-const Signup = () => {
+function Signup() {
   const client = useClient();
 
   const [userData, setUserData] = useState<UserData>({
@@ -100,7 +100,7 @@ const Signup = () => {
       let errorMsg = "";
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
-        console.log("signup", errorCode);
+
         errorMsg =
           serverErrorMessages.signup[errorCode] || serverErrorMessages.default;
       }
@@ -224,6 +224,6 @@ const Signup = () => {
       </LandingLayout>
     </>
   );
-};
+}
 
 export default Signup;

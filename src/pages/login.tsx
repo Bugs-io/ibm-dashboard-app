@@ -9,7 +9,7 @@ import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 
-const Login = () => {
+function Login() {
   const client = useClient();
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
@@ -74,7 +74,7 @@ const Login = () => {
       setLoadingStatus("inactive");
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
-        console.log("login", errorCode);
+
         errorMsg =
           serverErrorMessages.login[errorCode] || serverErrorMessages.default;
       }
@@ -106,10 +106,10 @@ const Login = () => {
               setLoginStep(1);
               setFormErrors((prevFormErrors) => {
                 const newFormErrors = { ...prevFormErrors };
-                for (const key in newFormErrors) {
+
+                Object.keys(newFormErrors).forEach(key => {
                   newFormErrors[key] = "";
-                }
-                return newFormErrors;
+                });
               });
             }}
             inputError={formErrors.password}
@@ -121,6 +121,6 @@ const Login = () => {
       </LandingLayout>
     </>
   );
-};
+}
 
 export default Login;

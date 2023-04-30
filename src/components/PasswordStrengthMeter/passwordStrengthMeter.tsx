@@ -2,7 +2,7 @@ import { CloseOutline, CheckmarkOutline } from "@carbon/icons-react";
 
 import styles from "./styles.module.scss";
 
-interface props {
+interface Props {
   requirements: {
     hasMinLength: boolean;
     hasLetters: boolean;
@@ -10,18 +10,17 @@ interface props {
   };
 }
 
-const CloseOutlineColored = () => {
+function CloseOutlineColored() {
   return <CloseOutline color="red" />;
-};
+}
 
-const CheckmarkOutlineColored = () => {
+function CheckmarkOutlineColored() {
   return <CheckmarkOutline color="green" />;
-};
+}
 
-const PasswordStrengthMeter = ({ requirements }: props) => {
+function PasswordStrengthMeter({ requirements }: Props) {
   return (
-    <>
-      <div className={styles.container}>
+    <div className={styles.container}>
         <div className={styles.check}>
           {requirements.hasMinLength ? (
             <CheckmarkOutlineColored />
@@ -49,8 +48,7 @@ const PasswordStrengthMeter = ({ requirements }: props) => {
           <p>A number</p>
         </div>
       </div>
-    </>
   );
-};
+}
 
 export default PasswordStrengthMeter;

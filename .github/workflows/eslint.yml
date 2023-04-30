@@ -1,0 +1,14 @@
+name: Check ESLint on Pull Request
+
+on: [pull_request]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install --only=dev
+      - name: Analyze code with eslint
+        run: npx eslint --max-warnings=10 "**/*.+(js|jsx|ts|tsx)"
