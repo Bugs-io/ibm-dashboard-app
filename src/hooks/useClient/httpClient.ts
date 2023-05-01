@@ -37,7 +37,7 @@ class HTTPClient {
       headers.Authorization = `Bearer ${this.token}`;
     }
 
-    this.instance = axios.create({ baseURL, headers, withCredentials: true });
+    this.instance = axios.create({ baseURL, headers });
 
     this._initializeResponseReceptor();
   }
@@ -64,6 +64,7 @@ class HTTPClient {
       emailResponse: string;
       access: string;
     }>("/login", { email, password });
+
     return res;
   };
 
@@ -78,6 +79,16 @@ class HTTPClient {
       emailResponse: string;
       access: string;
     }>("/signup", { email, password });
+    return res;
+  };
+
+  public me = async (): Promise<any> => {
+    const res = await this.instance.get("/me");
+    return res;
+  };
+
+  public hello = async (): Promise<any> => {
+    const res = await this.instance.get("/hello");
     return res;
   };
 }
