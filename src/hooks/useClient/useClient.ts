@@ -5,7 +5,7 @@ import HTTPClient from "./httpClient";
 const useClient = (): HTTPClient => {
   const accessToken = "";
   const client = useMemo(
-    () => new HTTPClient("http://localhost:8000", accessToken),
+    () => new HTTPClient(process.env.NEXT_PUBLIC_API_URL, accessToken),
     [accessToken]
   );
 

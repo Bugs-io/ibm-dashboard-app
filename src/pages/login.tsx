@@ -8,9 +8,11 @@ import useClient from "@/hooks/useClient";
 import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const Login = () => {
   const client = useClient();
+  const { saveAuthToken } = useAuthContext();
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
 
@@ -69,6 +71,8 @@ const Login = () => {
     try {
       setLoadingStatus("active");
       const res = await client.login(loginData.email, loginData.password);
+      console.log(res.id_token);
+      saveAuthToken(res.id_token);
       setLoadingStatus("inactive");
     } catch (error) {
       setLoadingStatus("inactive");
