@@ -23,11 +23,7 @@ const withAuth = (Page: NextPage, { isPrivate = false }: Props) => {
       }
     }, [isAuthenticated, isLoadingAuth, isPrivate, router]);
 
-    if (isLoadingAuth) {
-      return <Loading />;
-    }
-
-    return <Page {...props} />;
+    return isLoadingAuth ? <Loading /> : <Page {...props} />;
   };
 
   return WithAuthComponent;
