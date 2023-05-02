@@ -76,7 +76,6 @@ const Login = () => {
       const res = await client.login(loginData.email, loginData.password);
       saveAuthToken!(res.id_token);
       setLoadingStatus("inactive");
-      router.push("/dashboard");
     } catch (error) {
       setLoadingStatus("inactive");
       if (error instanceof AxiosError) {

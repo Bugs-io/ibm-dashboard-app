@@ -13,10 +13,10 @@ const SignUpModal = (props: Props) => {
       modalHeading="Account created."
       primaryButtonText="Log In"
       preventCloseOnClickOutside
-      onRequestClose={() => router.push("login")}
+      onRequestClose={() => router.push("/login")}
       onRequestSubmit={(e) => {
         e.preventDefault();
-        router.push("login");
+        router.push("/login");
       }}
       shouldSubmitOnEnter
       size="xs"

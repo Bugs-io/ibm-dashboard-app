@@ -18,6 +18,7 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   isLoadingAuth: boolean;
   saveAuthToken?: (access: string) => Promise<void>;
+  clearAuth?: () => Promise<void>;
   user: User | null;
 }
 
@@ -54,10 +55,16 @@ const AuthProvider = ({ children }: Props) => {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
+          setUser(null);
         }
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
       }
+
       setIsLoadingAuth(false);
     };
+
     loadUserFromLocalStorage();
   }, [accessToken]);
 
@@ -69,7 +76,6 @@ const AuthProvider = ({ children }: Props) => {
 
   const clearAuth = useCallback(async () => {
     setAccessToken("");
-    setUser(null);
     await localStorage.clear();
   }, []);
 
@@ -81,6 +87,7 @@ const AuthProvider = ({ children }: Props) => {
         isLoadingAuth,
         user,
         saveAuthToken,
+        clearAuth,
       }}
     >
       {children}
