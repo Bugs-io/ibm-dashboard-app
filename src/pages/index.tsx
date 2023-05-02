@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.scss";
 import Login from "./login";
-
+import Dashboard from "./dashboard";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Login />
+        <Dashboard />
       </main>
     </>
   );

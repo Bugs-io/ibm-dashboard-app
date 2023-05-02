@@ -6,15 +6,19 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import Router, { useRouter } from "next/router";
 import HTTPClient from "@/hooks/useClient/httpClient";
-import { Loading } from "carbon-components-react";
+
+interface User {
+  token: string;
+  email: string;
+}
 
 interface AuthContextValue {
   accessToken: string;
   isAuthenticated: boolean;
   isLoadingAuth: boolean;
-  saveAuthToken: (access: string) => Promise<void>;
+  saveAuthToken?: (access: string) => Promise<void>;
+  user: User | null;
 }
 
 interface Props {
@@ -24,30 +28,38 @@ interface Props {
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 let client = new HTTPClient(API_URL);
 
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const AuthContext = createContext<AuthContextValue>({
+  accessToken: "",
+  isAuthenticated: false,
+  isLoadingAuth: true,
+  user: null,
+});
 
 const AuthProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken] = useState("");
-  const [user, setUser] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const loadUserFromLocalStorage = async () => {
-      const token = localStorage.getItem("token");
+      const token = await localStorage.getItem("token");
+
       if (token) {
-        console.log("We have a token!");
-        console.log(token);
         client = new HTTPClient(API_URL, token);
-        const res = await client.hello();
-        console.log(res);
-        /*const fetchedUser = await client.me();
-        console.log(fetchedUser);*/
-        /*if (fetchedUser) setUser(user);*/
+        const fetchedUser = await client.me();
+
+        if (fetchedUser) {
+          setUser(fetchedUser);
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
       }
-      setLoading(false);
+      setIsLoadingAuth(false);
     };
     loadUserFromLocalStorage();
-  }, []);
+  }, [accessToken]);
 
   const saveAuthToken = useCallback(async (access: string): Promise<void> => {
     setAccessToken(access);
@@ -57,22 +69,22 @@ const AuthProvider = ({ children }: Props) => {
 
   const clearAuth = useCallback(async () => {
     setAccessToken("");
-
+    setUser(null);
     await localStorage.clear();
   }, []);
 
-  const contextValue: AuthContextValue = useMemo(
-    () => ({
-      accessToken,
-      isAuthenticated: accessToken !== "",
-      isLoadingAuth: isLoading,
-      saveAuthToken,
-    }),
-    [accessToken, isLoading]
-  );
-
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        accessToken,
+        isAuthenticated,
+        isLoadingAuth,
+        user,
+        saveAuthToken,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 
@@ -86,23 +98,4 @@ const useAuthContext = (): AuthContextValue => {
   return context;
 };
 
-interface ProotectRouteProps {
-  children: JSX.Element | JSX.Element[];
-}
-
-const ProtectRoute = ({ children }: Props) => {
-  const { isAuthenticated, isLoadingAuth } = useAuthContext();
-  console.log(window.location.pathname);
-  if (
-    isLoadingAuth ||
-    (!isAuthenticated && window.location.pathname !== "/login")
-  ) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
-  }
-  return children;
-};
-export { AuthProvider, useAuthContext, ProtectRoute };
+export { AuthProvider, useAuthContext };
