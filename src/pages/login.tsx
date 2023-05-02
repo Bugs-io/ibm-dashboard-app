@@ -9,10 +9,13 @@ import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { useRouter } from "next/router";
+import withAuth from "@/components/withAuth";
 
 const Login = () => {
   const client = useClient();
   const { saveAuthToken } = useAuthContext();
+  const router = useRouter();
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
 
@@ -71,14 +74,13 @@ const Login = () => {
     try {
       setLoadingStatus("active");
       const res = await client.login(loginData.email, loginData.password);
-      console.log(res.id_token);
-      saveAuthToken(res.id_token);
+      saveAuthToken!(res.id_token);
       setLoadingStatus("inactive");
+      router.push("/dashboard");
     } catch (error) {
       setLoadingStatus("inactive");
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
-        console.log("login", errorCode);
         errorMsg =
           serverErrorMessages.login[errorCode] || serverErrorMessages.default;
       }
@@ -127,4 +129,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withAuth(Login, {isPrivate: false});

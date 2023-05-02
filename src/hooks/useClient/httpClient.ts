@@ -14,10 +14,6 @@ interface Tokens {
   access: string;
 }
 
-interface HelloWorldResponse {
-  res: string;
-}
-
 class HTTPClient {
   private readonly instance: AxiosInstance;
   private readonly token: string;
@@ -84,11 +80,6 @@ class HTTPClient {
 
   public me = async (): Promise<any> => {
     const res = await this.instance.get("/me");
-    return res;
-  };
-
-  public hello = async (): Promise<any> => {
-    const res = await this.instance.get("/hello");
     return res;
   };
 }

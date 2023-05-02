@@ -32,6 +32,7 @@ import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 import SignUpModal from "@/components/SignUpModal";
+import withAuth from "@/components/withAuth";
 
 const Signup = () => {
   const client = useClient();
@@ -104,7 +105,6 @@ const Signup = () => {
       let errorMsg = "";
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
-        console.log("signup", errorCode);
         errorMsg =
           serverErrorMessages.signup[errorCode] || serverErrorMessages.default;
       }
@@ -230,4 +230,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withAuth(Signup, { isPrivate: false });
