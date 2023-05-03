@@ -6,19 +6,23 @@ import {
   Button,
 } from "carbon-components-react";
 import { Upload, Logout } from "@carbon/icons-react";
+import UploadFileModal from "../UploadFileModal";
 
 import { useAuthContext } from "@/contexts/AuthContext";
-import { useRouter } from "next/router";
 
 import styles from "./styles.module.scss";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
-  const { clearAuth, isLoadingAuth } = useAuthContext();
-  const router = useRouter();
+  const { clearAuth } = useAuthContext();
+  const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
 
   const logout = async () => {
     await clearAuth!();
+  };
+
+  const uploadFile = () => {
+    setIsUploadFileModalOpen(true);
   };
 
   return (
@@ -29,6 +33,7 @@ const Navbar = () => {
           <HeaderGlobalAction
             aria-label="Upload file"
             className={styles.button}
+            onClick={uploadFile}
           >
             <Upload />
           </HeaderGlobalAction>
@@ -38,6 +43,11 @@ const Navbar = () => {
           </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>
+
+      <UploadFileModal
+        isActive={isUploadFileModalOpen}
+        setOpen={setIsUploadFileModalOpen}
+      />
     </div>
   );
 };
