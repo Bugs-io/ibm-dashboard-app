@@ -7,6 +7,7 @@ import {
   useMemo,
 } from "react";
 import HTTPClient from "@/hooks/useClient/httpClient";
+import { useRouter } from "next/router";
 
 interface User {
   token: string;
@@ -37,6 +38,7 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 const AuthProvider = ({ children }: Props) => {
+  const router = useRouter();
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
@@ -44,8 +46,9 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const loadUserFromLocalStorage = async () => {
-      const token = await localStorage.getItem("token");
-
+      const token = localStorage.getItem("token");
+      setAccessToken(token!);
+      
       if (token) {
         client = new HTTPClient(API_URL, token);
         const fetchedUser = await client.me();
@@ -68,30 +71,35 @@ const AuthProvider = ({ children }: Props) => {
     loadUserFromLocalStorage();
   }, [accessToken]);
 
+  useEffect(() => {
+    console.log(isAuthenticated);
+    router.push("/");
+  }, [isAuthenticated]);
+
   const saveAuthToken = useCallback(async (access: string): Promise<void> => {
     setAccessToken(access);
-
-    await localStorage.setItem("token", access);
+    localStorage.setItem("token", access);
   }, []);
 
-  const clearAuth = useCallback(async () => {
+  const clearAuth = useCallback(() => {
     setAccessToken("");
-    await localStorage.clear();
+    localStorage.clear();
   }, []);
+
+  const contextValue: AuthContextValue = useMemo(
+    () => ({
+      user: user,
+      accessToken: accessToken,
+      isAuthenticated: isAuthenticated,
+      isLoadingAuth: isLoadingAuth,
+      saveAuthToken,
+      clearAuth,
+    }),
+    [accessToken, isLoadingAuth]
+  );
 
   return (
-    <AuthContext.Provider
-      value={{
-        accessToken,
-        isAuthenticated,
-        isLoadingAuth,
-        user,
-        saveAuthToken,
-        clearAuth,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 

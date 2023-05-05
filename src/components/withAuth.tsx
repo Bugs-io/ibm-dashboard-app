@@ -10,14 +10,14 @@ type Props = {
 
 const withAuth = (Page: NextPage, { isPrivate = false }: Props) => {
   const WithAuthComponent: NextPage = (props) => {
-    const { isAuthenticated, isLoadingAuth } = useAuthContext();
+    const { isAuthenticated, isLoadingAuth, accessToken } = useAuthContext();
     const router = useRouter();
 
     useEffect(() => {
       if (!isLoadingAuth) {
-        if (isPrivate && !isAuthenticated) {
+        if (isPrivate && !accessToken) {
           router.push("/login");
-        } else if (!isPrivate && isAuthenticated) {
+        } else if (!isPrivate && accessToken) {
           router.push("/");
         }
       }
