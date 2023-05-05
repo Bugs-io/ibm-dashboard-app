@@ -82,6 +82,11 @@ class HTTPClient {
     const res = await this.instance.get("/me");
     return res;
   };
+
+  public uploadInternalDataset = async (file: File): Promise<any> => {
+    const res = await this.instance.post("/upload-internal-dataset", { file });
+    return res;
+  };
 }
 
 export default HTTPClient;

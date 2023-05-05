@@ -3,7 +3,6 @@ import {
   HeaderName,
   HeaderGlobalAction,
   HeaderGlobalBar,
-  Button,
 } from "carbon-components-react";
 import { Upload, Logout } from "@carbon/icons-react";
 import UploadFileModal from "../UploadFileModal";
@@ -17,8 +16,8 @@ const Navbar = () => {
   const { clearAuth } = useAuthContext();
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
 
-  const logout = async () => {
-    await clearAuth!();
+  const logout = () => {
+    clearAuth!();
   };
 
   const uploadFile = () => {

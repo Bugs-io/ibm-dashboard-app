@@ -1,3 +1,4 @@
+import useClient from "@/hooks/useClient";
 import {
   FileUploaderDropContainer,
   FileUploaderItem,
@@ -17,6 +18,7 @@ interface Error {
 }
 
 const REQUIRED_EXTENSION = "xlsx";
+
 const EXTENSION_ERROR: Error = {
   isInvalid: false,
   body: "Invalide file format.",
@@ -24,8 +26,17 @@ const EXTENSION_ERROR: Error = {
 };
 
 const UploadFileModal = (props: Props) => {
+  const client = useClient();
+
   const [file, setFile] = useState<File>();
   const [error, setError] = useState<Error>(EXTENSION_ERROR);
+  const [isPrimaryButtonDisabled, setIsPrimaryButtonDisabled] =
+    useState<Boolean>(true);
+
+  useEffect(() => {
+    setIsPrimaryButtonDisabled((file && !error.isInvalid) ? false : true);
+  }, [file]);
+
   const handleChangeFile = (
     e: React.DragEvent<HTMLElement> | React.ChangeEvent<HTMLInputElement>,
     addedFilesObj: { addedFiles: File[] }
@@ -47,15 +58,23 @@ const UploadFileModal = (props: Props) => {
     setFile(undefined);
   };
 
+  const handleSubmit = async (
+    e:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault();
+
+    client.uploadInternalDataset(file!);
+  };
+
   return (
     <Modal
       open={props.isActive}
       modalHeading="Upload the certifications data set."
       primaryButtonText="Upload"
-      onRequestSubmit={(e) => {
-        e.preventDefault();
-        console.log("TODO: upload");
-      }}
+      primaryButtonDisabled={isPrimaryButtonDisabled}
+      onRequestSubmit={(e) => handleSubmit(e)}
       onRequestClose={() => {
         props.setOpen(false);
         handleClean();
@@ -64,12 +83,12 @@ const UploadFileModal = (props: Props) => {
     >
       <div className="cds--file__container">
         <p className="cds--file--label">
-          Please provide the .xslx file to update the database that keep tracks
-          of IBM's certifications, courses and badges.
+          Please provide the file to update the database that keeps track of
+          IBM's certifications, courses and badges.
         </p>
 
         <p className="cds--label-description">
-          Max file size is 500kb. Supported file types are .jpg and .png.
+          Format must be .xlsx with a maximum size of 500kb.
         </p>
 
         {file === undefined ? (
@@ -79,7 +98,6 @@ const UploadFileModal = (props: Props) => {
             labelText="Drag and drop or click here to upload"
             name=""
             onAddFiles={(e, files) => handleChangeFile(e, files)}
-            tabIndex={0}
           />
         ) : (
           <FileUploaderItem
