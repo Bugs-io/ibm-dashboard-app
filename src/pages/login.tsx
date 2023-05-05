@@ -128,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default withAuth(Login, {isPrivate: false});
+export default withAuth(Login, { isPrivate: false });
