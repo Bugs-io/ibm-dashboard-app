@@ -39,6 +39,7 @@ const AuthContext = createContext<AuthContextValue>({
 
 const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
+
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
@@ -48,17 +49,22 @@ const AuthProvider = ({ children }: Props) => {
     const loadUserFromLocalStorage = async () => {
       const token = localStorage.getItem("token");
       setAccessToken(token!);
-      
+
       if (token) {
         client = new HTTPClient(API_URL, token);
-        const fetchedUser = await client.me();
-
-        if (fetchedUser) {
-          setUser(fetchedUser);
-          setIsAuthenticated(true);
-        } else {
+        try {
+          const fetchedUser = await client.me();
+          if (fetchedUser) {
+            setUser(fetchedUser);
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+            setUser(null);
+          }
+        } catch (error) {
           setIsAuthenticated(false);
           setUser(null);
+          saveAuthToken("");
         }
       } else {
         setIsAuthenticated(false);
@@ -72,7 +78,6 @@ const AuthProvider = ({ children }: Props) => {
   }, [accessToken]);
 
   useEffect(() => {
-    console.log(isAuthenticated);
     router.push("/");
   }, [isAuthenticated]);
 
