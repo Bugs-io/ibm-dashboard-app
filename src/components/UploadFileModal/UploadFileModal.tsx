@@ -1,4 +1,5 @@
 import useClient from "@/hooks/useClient";
+import axios from "axios";
 import {
   FileUploaderDropContainer,
   FileUploaderItem,
@@ -34,7 +35,7 @@ const UploadFileModal = (props: Props) => {
     useState<Boolean>(true);
 
   useEffect(() => {
-    setIsPrimaryButtonDisabled((file && !error.isInvalid) ? false : true);
+    setIsPrimaryButtonDisabled(file && !error.isInvalid ? false : true);
   }, [file]);
 
   const handleChangeFile = (
@@ -65,7 +66,11 @@ const UploadFileModal = (props: Props) => {
   ) => {
     e.preventDefault();
 
-    client.uploadInternalDataset(file!);
+    const formData = new FormData();
+    formData.append("file", file!);
+    
+    const res = await client.uploadInternalDataset(formData);
+    console.log(res);
   };
 
   return (
