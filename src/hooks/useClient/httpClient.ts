@@ -83,8 +83,14 @@ class HTTPClient {
     return res;
   };
 
-  public uploadInternalDataset = async (file: File): Promise<any> => {
-    const res = await this.instance.post("/upload-internal-dataset", { file });
+  public uploadInternalDataset = async (formData: FormData): Promise<any> => {
+    const res = await this.instance.post("/upload-internal-dataset", formData, {
+      headers: {
+        ...this.instance.defaults.headers,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return res;
   };
 }
