@@ -68,7 +68,7 @@ const UploadFileModal = (props: Props) => {
 
     const formData = new FormData();
     formData.append("file", file!);
-    
+
     const res = await client.uploadInternalDataset(formData);
     console.log(res);
   };
@@ -88,12 +88,12 @@ const UploadFileModal = (props: Props) => {
     >
       <div className="cds--file__container">
         <p className="cds--file--label">
-          Please provide the file to update the database that keeps track of
-          IBM's certifications, courses and badges.
+          Remember that uploading a new data set is going to upload the dashboard
+          for everyone.
         </p>
 
         <p className="cds--label-description">
-          Format must be .xlsx with a maximum size of 500kb.
+          Must be an .xlsx file with a maximum size of 600kb.
         </p>
 
         {file === undefined ? (

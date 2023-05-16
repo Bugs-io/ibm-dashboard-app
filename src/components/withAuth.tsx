@@ -21,7 +21,7 @@ const withAuth = (Page: NextPage, { isPrivate = false }: Props) => {
           router.push("/");
         }
       }
-    }, [isAuthenticated, isLoadingAuth, isPrivate, router]);
+    }, [isAuthenticated, isLoadingAuth, router]);
 
     return isLoadingAuth ? <Loading /> : <Page {...props} />;
   };
