@@ -10,9 +10,11 @@ import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 import { useAuthContext } from "@/contexts/AuthContext";
 import withAuth from "@/components/withAuth";
+import { useRouter } from "next/router";
 
-function Login() {
+const Login = () => {
   const client = useClient();
+  const router = useRouter();
   const { saveAuthToken } = useAuthContext();
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
@@ -87,6 +89,7 @@ function Login() {
       const res = await client.login(loginData.email, loginData.password);
       saveAuthToken!(res.id_token);
       setLoadingStatus("inactive");
+      router.push("/");
     } catch (error) {
       setLoadingStatus("inactive");
       if (error instanceof AxiosError) {
