@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import HTTPClient from "./httpClient";
 import { useAuthContext } from "@/contexts/AuthContext";
+import HTTPClient from "./httpClient";
 
 const useClient = (): HTTPClient => {
   const { accessToken } = useAuthContext();

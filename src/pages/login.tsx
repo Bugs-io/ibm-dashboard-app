@@ -9,13 +9,11 @@ import { AxiosError } from "axios";
 import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 import { useAuthContext } from "@/contexts/AuthContext";
-import { useRouter } from "next/router";
 import withAuth from "@/components/withAuth";
 
-const Login = () => {
+function Login() {
   const client = useClient();
   const { saveAuthToken } = useAuthContext();
-  const router = useRouter();
 
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("inactive");
 
@@ -65,6 +63,19 @@ const Login = () => {
     setLoginStep(2);
   };
 
+  const handleBackToStep1 = () => {
+    setLoginStep(1);
+    setFormErrors((prevFormErrors) => {
+      const cleanedFormErrors = prevFormErrors;
+
+      Object.keys(prevFormErrors).forEach((key) => {
+        cleanedFormErrors[key] = "";
+      });
+
+      return cleanedFormErrors;
+    });
+  };
+
   const handleLogin = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -107,16 +118,7 @@ const Login = () => {
         ) : (
           <LoginStep2
             handleSubmit={handleLogin}
-            switchLoginStep={() => {
-              setLoginStep(1);
-              setFormErrors((prevFormErrors) => {
-                const newFormErrors = { ...prevFormErrors };
-                for (const key in newFormErrors) {
-                  newFormErrors[key] = "";
-                }
-                return newFormErrors;
-              });
-            }}
+            switchLoginStep={handleBackToStep1}
             inputError={formErrors.password}
             handleChange={handleChange}
             loginData={loginData}
@@ -126,6 +128,6 @@ const Login = () => {
       </LandingLayout>
     </>
   );
-};
+}
 
 export default withAuth(Login, { isPrivate: false });

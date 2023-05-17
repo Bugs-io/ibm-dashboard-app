@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ReactNode, useState } from "react";
 import styles from "./carbonLink.module.scss";
 
-interface props {
+interface Props {
   href?: string;
   children: ReactNode;
   className?: string;
@@ -10,9 +10,7 @@ interface props {
   onClick?: () => void;
 }
 
-const CarbonLink = ({
-  href, children, className, target, onClick,
-}: props) => {
+function CarbonLink({ href, children, className, target, onClick }: Props) {
   const [classNameStyle, setClassNameStyle] = useState(styles.default);
 
   return (
@@ -29,6 +27,6 @@ const CarbonLink = ({
       {children}
     </Link>
   );
-};
+}
 
 export default CarbonLink;

@@ -37,7 +37,7 @@ const AuthContext = createContext<AuthContextValue>({
   user: null,
 });
 
-const AuthProvider = ({ children }: Props) => {
+function AuthProvider({ children }: Props) {
   const router = useRouter();
 
   const [accessToken, setAccessToken] = useState("");
@@ -64,7 +64,6 @@ const AuthProvider = ({ children }: Props) => {
         } catch (error) {
           setIsAuthenticated(false);
           setUser(null);
-          saveAuthToken("");
         }
       } else {
         setIsAuthenticated(false);
@@ -93,10 +92,10 @@ const AuthProvider = ({ children }: Props) => {
 
   const contextValue: AuthContextValue = useMemo(
     () => ({
-      user: user,
-      accessToken: accessToken,
-      isAuthenticated: isAuthenticated,
-      isLoadingAuth: isLoadingAuth,
+      user,
+      accessToken,
+      isAuthenticated,
+      isLoadingAuth,
       saveAuthToken,
       clearAuth,
     }),
@@ -106,7 +105,7 @@ const AuthProvider = ({ children }: Props) => {
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
-};
+}
 
 const useAuthContext = (): AuthContextValue => {
   const context = useContext(AuthContext);

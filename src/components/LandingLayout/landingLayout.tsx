@@ -3,10 +3,11 @@ import { Theme, Grid, Column } from "carbon-components-react";
 
 import styles from "./LandingLayout.module.scss";
 
-interface props {
+interface Props {
   children: ReactNode;
 }
-const LandingLayout = ({ children }: props) => {
+
+function LandingLayout({ children }: Props) {
   return (
     <Theme theme="g100" className={styles.loginPage}>
       <Grid fullWidth className={styles.gridLayout}>
@@ -16,6 +17,6 @@ const LandingLayout = ({ children }: props) => {
       </Grid>
     </Theme>
   );
-};
+}
 
 export default LandingLayout;

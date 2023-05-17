@@ -5,9 +5,9 @@ import {
   TextInput,
   InlineLoading,
 } from "carbon-components-react";
-import CarbonLink from "../CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 import utilStyle from "@/styles/utils.module.scss";
+import CarbonLink from "../CarbonLink";
 
 interface Props {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -18,15 +18,22 @@ interface Props {
   loadingStatus: string | undefined;
 }
 
-const LoginStep2 = (props: Props) => {
+function LoginStep2({
+  loginData,
+  handleChange,
+  handleSubmit,
+  inputError,
+  loadingStatus,
+  switchLoginStep,
+}: Props) {
   return (
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <h4 style={{ marginBottom: 40, wordWrap: "break-word" }}>
         Logging in as{" "}
-        <span className={utilStyle.bold}>{`${props.loginData.email} `}</span>
+        <span className={utilStyle.bold}>{`${loginData.email} `}</span>
         <CarbonLink
-          onClick={() => props.switchLoginStep()}
+          onClick={() => switchLoginStep()}
           className={styles.linkButton}
         >
           Not you?
@@ -53,12 +60,12 @@ const LoginStep2 = (props: Props) => {
             <TextInput.PasswordInput
               id="login-password"
               name="password"
-              value={props.loginData.password}
+              value={loginData.password}
               labelText="Password"
               hideLabel
-              onChange={(e) => props.handleChange(e)}
-              invalid={props.inputError !== ""}
-              invalidText={props.inputError}
+              onChange={(e) => handleChange(e)}
+              invalid={inputError !== ""}
+              invalidText={inputError}
               autoFocus
             />
           </div>
@@ -66,17 +73,17 @@ const LoginStep2 = (props: Props) => {
         <Button
           kind="primary"
           renderIcon={ArrowRight}
-          onClick={(e) => props.handleSubmit(e)}
+          onClick={(e) => handleSubmit(e)}
           className={styles.buttonContainer}
           type="submit"
         >
           <div className={styles.buttonContent}>
             <p>Log in </p>
-            <InlineLoading style={{ width: "auto" }} status={props.loadingStatus} />
+            <InlineLoading style={{ width: "auto" }} status={loadingStatus} />
           </div>
         </Button>
       </Form>
     </div>
   );
-};
+}
 export default LoginStep2;
