@@ -12,7 +12,7 @@ import UploadFileModal from "../UploadFileModal";
 
 import styles from "./styles.module.scss";
 
-function Navbar() {
+const Navbar = () => {
   const { clearAuth } = useAuthContext();
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
 

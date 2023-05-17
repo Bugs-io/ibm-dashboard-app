@@ -10,7 +10,7 @@ interface Props {
   onClick?: () => void;
 }
 
-function CarbonLink({ href, children, className, target, onClick }: Props) {
+const CarbonLink = ({ href, children, className, target, onClick }: Props) => {
   const [classNameStyle, setClassNameStyle] = useState(styles.default);
 
   return (

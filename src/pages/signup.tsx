@@ -33,7 +33,7 @@ import {
   isPasswordValid,
 } from "../utils/SignUpValidations";
 
-function Signup() {
+const Signup = () => {
   const client = useClient();
 
   const [userData, setUserData] = useState<UserData>({

@@ -12,13 +12,12 @@ interface Props {
   loginData: UserData;
 }
 
-function LoginStep1({
+const LoginStep1 = ({
   loginData,
   handleChange,
   handleSubmit,
   inputError,
-}: Props) {
-  return (
+}: Props) => (
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <h4 style={{ marginBottom: 40 }}>
@@ -68,7 +67,6 @@ function LoginStep1({
         <Checkbox id="check-remember-id" labelText="Remember ID?" />
       </Form>
     </div>
-  );
-}
+  )
 
 export default LoginStep1;

@@ -5,7 +5,7 @@ interface Props {
   isActive: boolean;
 }
 
-function SignUpModal({ isActive }: Props) {
+const SignUpModal = ({ isActive }: Props) => {
   const router = useRouter();
   return (
     <Modal

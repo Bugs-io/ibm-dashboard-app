@@ -18,15 +18,14 @@ interface Props {
   loadingStatus: string | undefined;
 }
 
-function LoginStep2({
+const LoginStep2 = ({
   loginData,
   handleChange,
   handleSubmit,
   inputError,
   loadingStatus,
   switchLoginStep,
-}: Props) {
-  return (
+}: Props) => (
     <div className={styles.loginForm}>
       <h2 style={{ marginBottom: 4 }}>Log in</h2>
       <h4 style={{ marginBottom: 40, wordWrap: "break-word" }}>
@@ -84,6 +83,5 @@ function LoginStep2({
         </Button>
       </Form>
     </div>
-  );
-}
+  )
 export default LoginStep2;
