@@ -1,6 +1,24 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next", "airbnb", "airbnb-typescript", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
-    "react-hooks/exhaustive-deps": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "quotes": ["error", "double"],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react-hooks/exhaustive-deps": "off",
+    "react/require-default-props": "off"
   }
 }

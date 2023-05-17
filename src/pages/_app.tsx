@@ -1,5 +1,5 @@
-import { Loading, Theme } from "carbon-components-react";
-import { AuthProvider, ProtectRoute } from "@/contexts/AuthContext";
+import { Theme } from "carbon-components-react";
+import { AuthProvider } from "@/contexts/AuthContext";
 import "../index.scss";
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";

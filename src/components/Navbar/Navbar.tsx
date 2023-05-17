@@ -5,14 +5,14 @@ import {
   HeaderGlobalBar,
 } from "carbon-components-react";
 import { Upload, Logout } from "@carbon/icons-react";
+import { useAuthContext } from "@/contexts/AuthContext";
+import { useState } from "react";
 import UploadFileModal from "../UploadFileModal";
 
-import { useAuthContext } from "@/contexts/AuthContext";
 
 import styles from "./styles.module.scss";
-import { useState } from "react";
 
-const Navbar = () => {
+function Navbar() {
   const { clearAuth } = useAuthContext();
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
 
@@ -49,6 +49,6 @@ const Navbar = () => {
       />
     </div>
   );
-};
+}
 
 export default Navbar;

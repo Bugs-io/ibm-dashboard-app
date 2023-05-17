@@ -5,11 +5,11 @@ interface Props {
   isActive: boolean;
 }
 
-const SignUpModal = (props: Props) => {
+function SignUpModal({ isActive }: Props) {
   const router = useRouter();
   return (
     <Modal
-      open={props.isActive}
+      open={isActive}
       modalHeading="Account created."
       primaryButtonText="Log In"
       preventCloseOnClickOutside
@@ -22,6 +22,6 @@ const SignUpModal = (props: Props) => {
       size="xs"
     />
   );
-};
+}
 
 export default SignUpModal;

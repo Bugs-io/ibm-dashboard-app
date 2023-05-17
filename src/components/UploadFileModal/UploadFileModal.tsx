@@ -1,5 +1,4 @@
 import useClient from "@/hooks/useClient";
-import axios from "axios";
 import {
   FileUploaderDropContainer,
   FileUploaderItem,
@@ -26,7 +25,7 @@ const EXTENSION_ERROR: Error = {
   subject: "Please make sure to be using .xlsx file.",
 };
 
-const UploadFileModal = (props: Props) => {
+function UploadFileModal({ isActive, setOpen }: Props) {
   const client = useClient();
 
   const [file, setFile] = useState<File>();
@@ -35,7 +34,7 @@ const UploadFileModal = (props: Props) => {
     useState<Boolean>(true);
 
   useEffect(() => {
-    setIsPrimaryButtonDisabled(file && !error.isInvalid ? false : true);
+    setIsPrimaryButtonDisabled(!(file && !error.isInvalid));
   }, [file]);
 
   const handleChangeFile = (
@@ -45,7 +44,7 @@ const UploadFileModal = (props: Props) => {
     const addedFile: File = addedFilesObj.addedFiles[0];
     const extension = addedFile.name.split(".").pop();
 
-    const hasError = extension !== REQUIRED_EXTENSION ? true : false;
+    const hasError = extension !== REQUIRED_EXTENSION;
 
     setError((prevError) => ({
       ...prevError,
@@ -75,21 +74,21 @@ const UploadFileModal = (props: Props) => {
 
   return (
     <Modal
-      open={props.isActive}
+      open={isActive}
       modalHeading="Upload the certifications data set."
       primaryButtonText="Upload"
       primaryButtonDisabled={isPrimaryButtonDisabled}
       onRequestSubmit={(e) => handleSubmit(e)}
       onRequestClose={() => {
-        props.setOpen(false);
+        setOpen(false);
         handleClean();
       }}
       shouldSubmitOnEnter
     >
       <div className="cds--file__container">
         <p className="cds--file--label">
-          Remember that uploading a new data set is going to upload the dashboard
-          for everyone.
+          Remember that uploading a new data set is going to upload the
+          dashboard for everyone.
         </p>
 
         <p className="cds--label-description">
@@ -118,6 +117,6 @@ const UploadFileModal = (props: Props) => {
       </div>
     </Modal>
   );
-};
+}
 
 export default UploadFileModal;

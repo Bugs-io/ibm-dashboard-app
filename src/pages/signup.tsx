@@ -12,14 +12,6 @@ import { LandingLayout } from "@/components";
 import CarbonLink from "@/components/CarbonLink";
 import styles from "@/styles/LandingForm.module.scss";
 
-import {
-  isEmailValid,
-  isFirstNameValid,
-  isLastNameValid,
-  isPasswordStrong,
-  isPasswordValid,
-} from "../utils/SignUpValidations";
-
 import PasswordStrengthMeter from "@/components/PasswordStrengthMeter";
 
 import {
@@ -33,8 +25,15 @@ import { LoadingStatus } from "@/utils/inlineLoadingStatus";
 import { serverErrorMessages } from "@/utils/serverErrorMessages";
 import SignUpModal from "@/components/SignUpModal";
 import withAuth from "@/components/withAuth";
+import {
+  isEmailValid,
+  isFirstNameValid,
+  isLastNameValid,
+  isPasswordStrong,
+  isPasswordValid,
+} from "../utils/SignUpValidations";
 
-const Signup = () => {
+function Signup() {
   const client = useClient();
 
   const [userData, setUserData] = useState<UserData>({
@@ -93,7 +92,7 @@ const Signup = () => {
 
     try {
       setLoadingStatus("active");
-      const res = await client.signup(
+      await client.signup(
         userData.email,
         userData.firstName!,
         userData.lastName!,
@@ -228,6 +227,6 @@ const Signup = () => {
       </LandingLayout>
     </>
   );
-};
+}
 
 export default withAuth(Signup, { isPrivate: false });

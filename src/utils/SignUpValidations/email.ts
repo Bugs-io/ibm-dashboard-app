@@ -1,4 +1,4 @@
-import { FormErrors } from "./types.ts";
+import { FormErrors } from "./types";
 
 export const isEmailValid = (
   email: string,
