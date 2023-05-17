@@ -10,16 +10,11 @@ interface Props {
   };
 }
 
-function CloseOutlineColored() {
-  return <CloseOutline color="red" />;
-}
+const CloseOutlineColored = () => <CloseOutline color="red" />
 
-function CheckmarkOutlineColored() {
-  return <CheckmarkOutline color="green" />;
-}
+const CheckmarkOutlineColored = () => <CheckmarkOutline color="green" />
 
-function PasswordStrengthMeter({ requirements }: Props) {
-  return (
+const PasswordStrengthMeter = ({ requirements }: Props) => (
     <div className={styles.container}>
         <div className={styles.check}>
           {requirements.hasMinLength ? (
@@ -48,7 +43,6 @@ function PasswordStrengthMeter({ requirements }: Props) {
           <p>A number</p>
         </div>
       </div>
-  );
-}
+  )
 
 export default PasswordStrengthMeter;

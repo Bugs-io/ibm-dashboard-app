@@ -25,7 +25,7 @@ const EXTENSION_ERROR: Error = {
   subject: "Please make sure to be using .xlsx file.",
 };
 
-function UploadFileModal({ isActive, setOpen }: Props) {
+const UploadFileModal = ({ isActive, setOpen }: Props) => {
   const client = useClient();
 
   const [file, setFile] = useState<File>();

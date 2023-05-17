@@ -18,6 +18,12 @@
         "tsx": "never"
       }
     ],
+    "react/function-component-definition": [
+      "off",
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
     "react-hooks/exhaustive-deps": "off",
     "react/require-default-props": "off"
   }

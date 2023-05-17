@@ -7,8 +7,7 @@ interface Props {
   children: ReactNode;
 }
 
-function LandingLayout({ children }: Props) {
-  return (
+const LandingLayout = ({ children }: Props) => (
     <Theme theme="g100" className={styles.loginPage}>
       <Grid fullWidth className={styles.gridLayout}>
         <Column className={styles.sidebar} sm={4} md={5} lg={6}>
@@ -16,7 +15,6 @@ function LandingLayout({ children }: Props) {
         </Column>
       </Grid>
     </Theme>
-  );
-}
+  )
 
 export default LandingLayout;
