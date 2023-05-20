@@ -1,0 +1,19 @@
+.container {
+  border-radius: 16px;
+  padding: 32px;
+  margin: 16px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+    margin: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
+    margin: 8px;
+  }
+}
