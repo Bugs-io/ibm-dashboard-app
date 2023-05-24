@@ -72,7 +72,7 @@ class HTTPClient {
       id: string;
       emailResponse: string;
       access: string;
-    }>("/signup", { email, password });
+    }>("/signup", { email, password, first_name: firstName, last_name: lastName });
     return res;
   };
 
