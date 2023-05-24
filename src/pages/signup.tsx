@@ -175,7 +175,7 @@ const Signup = () => {
                   value={userData.lastName}
                   onChange={(e) => handleChange(e)}
                   onBlur={() =>
-                    isFirstNameValid(userData.lastName!, setFormErrors)
+                    isLastNameValid(userData.lastName!, setFormErrors)
                   }
                   invalid={formErrors.lastName !== ""}
                   invalidText={formErrors.lastName}
