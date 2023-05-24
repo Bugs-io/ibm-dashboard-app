@@ -94,8 +94,8 @@ const Signup = () => {
       setLoadingStatus("active");
       await client.signup(
         userData.email,
-        userData.firstName!,
-        userData.lastName!,
+        userData.firstName,
+        userData.lastName,
         userData.password
       );
       setLoadingStatus("inactive");
@@ -227,6 +227,6 @@ const Signup = () => {
       </LandingLayout>
     </>
   );
-}
+};
 
 export default withAuth(Signup, { isPrivate: false });
