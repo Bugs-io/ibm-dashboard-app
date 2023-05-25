@@ -7,6 +7,7 @@ import {
   useMemo,
 } from "react";
 import HTTPClient from "@/hooks/useClient/httpClient";
+import { useRouter } from "next/router";
 
 interface User {
   token: string;
@@ -37,10 +38,17 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 const AuthProvider = ({ children }: Props) => {
+  const router = useRouter();
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    setAccessToken("");
+  };
 
   useEffect(() => {
     const loadUserFromLocalStorage = async () => {
@@ -55,16 +63,13 @@ const AuthProvider = ({ children }: Props) => {
             setUser(fetchedUser);
             setIsAuthenticated(true);
           } else {
-            setIsAuthenticated(false);
-            setUser(null);
+            logout();
           }
         } catch (error) {
-          setIsAuthenticated(false);
-          setUser(null);
+          logout();
         }
       } else {
-        setIsAuthenticated(false);
-        setUser(null);
+        logout();
       }
 
       setIsLoadingAuth(false);
