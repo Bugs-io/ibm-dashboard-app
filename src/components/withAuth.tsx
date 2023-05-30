@@ -17,9 +17,9 @@ const withAuth = (Page: NextPage, { isPrivate = false }: Props): NextPage => {
     useEffect(() => {
       if (!isLoadingAuth) {
         if (isPrivate && !accessToken) {
-          router.push("/login");
-        } else if (!isPrivate && accessToken) {
           router.push("/");
+        } else if (!isPrivate && accessToken) {
+          router.push("/dashboard");
         }
       }
     }, [isAuthenticated, isLoadingAuth, accessToken]);
