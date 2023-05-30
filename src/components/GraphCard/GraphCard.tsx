@@ -4,11 +4,18 @@ interface Props {
   id: string;
   title: string;
   isInteractive: boolean;
+  children?: React.ReactNode;
 }
 
-const GraphCard = ({ id, title, isInteractive }: Props) => (
-  <div className={styles.card} key={id} data-id={id} style={{cursor: isInteractive ? "grab" : ""}}>
+const GraphCard = ({ id, title, isInteractive, children }: Props) => (
+  <div
+    className={styles.card}
+    key={id}
+    data-id={id}
+    style={{ cursor: isInteractive ? "grab" : "" }}
+  >
     <h2>{title}</h2>
+    {children}
   </div>
 );
 

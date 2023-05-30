@@ -38,7 +38,6 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 const AuthProvider = ({ children }: Props) => {
-  const router = useRouter();
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
