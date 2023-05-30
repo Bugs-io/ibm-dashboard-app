@@ -94,8 +94,8 @@ const Signup = () => {
       setLoadingStatus("active");
       await client.signup(
         userData.email,
-        userData.firstName,
-        userData.lastName,
+        userData.firstName!,
+        userData.lastName!,
         userData.password
       );
       setLoadingStatus("inactive");
