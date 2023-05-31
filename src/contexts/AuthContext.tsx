@@ -7,7 +7,6 @@ import {
   useMemo,
 } from "react";
 import HTTPClient from "@/hooks/useClient/httpClient";
-import { useRouter } from "next/router";
 
 interface User {
   token: string;
@@ -38,7 +37,6 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 const AuthProvider = ({ children }: Props) => {
-  const router = useRouter();
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
