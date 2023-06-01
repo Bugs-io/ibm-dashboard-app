@@ -6,6 +6,11 @@ import { BarChartOptions, ChartTabularData } from "@carbon/charts/interfaces";
 import GraphCard from "../GraphCard";
 import styles from "./styles.module.scss";
 
+interface GraphData {
+  id: string;
+  content: string;
+}
+
 const sampleData: ChartTabularData = [
   {
     group: "Qty",
@@ -45,10 +50,16 @@ const sampleOptions: BarChartOptions = {
   theme: "g90",
 };
 
+const dummyData: GraphData[] = Array.from({ length: 8 }, (_, i) => ({
+  id: (i + 1).toString(),
+  content: (i + 1).toString(),
+}));
+
 const GraphGrid = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const sortableJsRef = useRef<Sortable | null>(null);
   const [isGridInteractive, setIsGridInteractive] = useState<boolean>(false);
+  const [data, setData] = useState<GraphData[]>(dummyData);
 
   const onListChange = () => {
     /* Use the following when saving to localStorage
