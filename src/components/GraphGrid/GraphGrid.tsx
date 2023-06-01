@@ -1,23 +1,53 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
+import { Sample } from "@/charts";
+import { BarChartOptions, ChartTabularData } from "@carbon/charts/interfaces";
 import GraphCard from "../GraphCard";
 import styles from "./styles.module.scss";
 
-interface GraphData {
-  id: string;
-  content: string;
-}
+const sampleData: ChartTabularData = [
+  {
+    group: "Qty",
+    value: 65000,
+  },
+  {
+    group: "More",
+    value: 29123,
+  },
+  {
+    group: "Sold",
+    value: 35213,
+  },
+  {
+    group: "Restocking",
+    value: 51213,
+  },
+  {
+    group: "Misc",
+    value: 16932,
+  },
+];
 
-const dummyData: GraphData[] = Array.from({ length: 8 }, (_, i) => ({
-  id: (i + 1).toString(),
-  content: (i + 1).toString(),
-}));
+const sampleOptions: BarChartOptions = {
+  title: "",
+  axes: {
+    left: {
+      mapsTo: "value",
+    },
+    bottom: {
+      mapsTo: "group",
+      scaleType: "labels",
+    },
+  },
+  height: "400px",
+  width: "100%",
+  theme: "g90",
+};
 
 const GraphGrid = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const sortableJsRef = useRef<Sortable | null>(null);
-  const [data, setData] = useState<GraphData[]>(dummyData);
   const [isGridInteractive, setIsGridInteractive] = useState<boolean>(false);
 
   const onListChange = () => {
@@ -54,15 +84,36 @@ const GraphGrid = () => {
           onToggle={(status) => setIsGridInteractive(status)}
         />
       </div>
+
       <div className={styles.graphsContainer} ref={gridRef}>
-        {data.map(({ id, content }) => (
-          <GraphCard
-            id={id}
-            key={id}
-            title={content}
-            isInteractive={isGridInteractive}
-          />
-        ))}
+        <GraphCard
+          id="1"
+          isInteractive={isGridInteractive}
+          title="My First Graph"
+        >
+          <div>A</div>
+        </GraphCard>
+        <GraphCard
+          id="2"
+          isInteractive={isGridInteractive}
+          title="My Second Graph"
+        >
+          <div>A</div>
+        </GraphCard>
+        <GraphCard
+          id="3"
+          isInteractive={isGridInteractive}
+          title="My Third Graph"
+        >
+          <div>A</div>
+        </GraphCard>
+        <GraphCard
+          id="3"
+          isInteractive={isGridInteractive}
+          title="Sample Graph"
+        >
+          <Sample data={sampleData} options={sampleOptions} />
+        </GraphCard>
       </div>
     </div>
   );
