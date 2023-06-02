@@ -1,3 +1,4 @@
+import MostAttendedCertifications from "./MostAttendedCertifications";
 import Sample from "./Sample";
 
-export { Sample };
+export { MostAttendedCertifications, Sample };

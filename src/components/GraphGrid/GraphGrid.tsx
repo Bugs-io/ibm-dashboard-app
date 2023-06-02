@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
-import { Sample } from "@/charts";
+import { MostAttendedCertifications, Sample } from "@/charts";
 import { BarChartOptions, ChartTabularData } from "@carbon/charts/interfaces";
 import GraphCard from "../GraphCard";
 import styles from "./styles.module.scss";
@@ -114,6 +114,10 @@ const GraphGrid = () => {
         >
           <Sample data={sampleData} options={sampleOptions} />
         </GraphCard>
+        <MostAttendedCertifications 
+          id="4"
+          isInteractive={isGridInteractive}
+        />
       </div>
     </div>
   );
