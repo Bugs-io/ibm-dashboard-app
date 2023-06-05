@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
-import { Sample } from "@/charts";
+import { Sample, SearchRadar } from "@/charts";
 import { BarChartOptions, ChartTabularData } from "@carbon/charts/interfaces";
 import GraphCard from "../GraphCard";
 import styles from "./styles.module.scss";
@@ -98,33 +98,24 @@ const GraphGrid = () => {
 
       <div className={styles.graphsContainer} ref={gridRef}>
         <GraphCard
-          id="1"
-          isInteractive={isGridInteractive}
-          title="My First Graph"
-        >
-          <div>A</div>
-        </GraphCard>
-        <GraphCard
-          id="2"
-          isInteractive={isGridInteractive}
-          title="My Second Graph"
-        >
-          <div>A</div>
-        </GraphCard>
-        <GraphCard
-          id="3"
-          isInteractive={isGridInteractive}
-          title="My Third Graph"
-        >
-          <div>A</div>
-        </GraphCard>
-        <GraphCard
           id="3"
           isInteractive={isGridInteractive}
           title="Sample Graph"
         >
           <Sample data={sampleData} options={sampleOptions} />
         </GraphCard>
+        <GraphCard
+          id="1"
+          isInteractive={isGridInteractive}
+          title="Search User Strength"
+        >
+          <SearchRadar />
+        </GraphCard>
+        <GraphCard
+          id="2"
+          isInteractive={isGridInteractive}
+          title="Placeholder Graph"
+        />
       </div>
     </div>
   );
