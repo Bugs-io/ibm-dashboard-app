@@ -39,7 +39,8 @@ const MostAttendedCertifications = ({ id, isInteractive }: Props) => {
 
   const [data, setData] = useState<any>([]);
   // TODO: add logic for loading state
-  const [_, setIsLoading] = useState<boolean>(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setIsLoading] = useState<boolean>(true);
 
   const getMostAttendedCertifications = async () => {
     try {
