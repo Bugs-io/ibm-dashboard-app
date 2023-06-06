@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import GraphCard from "@/components/GraphCard"
+import GraphCard from "@/components/GraphCard";
 import useClient from "@/hooks/useClient";
 import { SimpleBarChart } from "@carbon/charts-react";
+import { BarChartOptions } from "@carbon/charts/interfaces";
 
 interface Props {
   id: string;
@@ -11,9 +12,9 @@ interface Props {
 type Certification = {
   name: string;
   total_attendees: number;
-}
+};
 
-const graphOptions = {
+const graphOptions: BarChartOptions = {
   axes: {
     left: {
       mapsTo: "group",
@@ -21,38 +22,42 @@ const graphOptions = {
     },
     bottom: {
       mapsTo: "total_attendees",
-    }
+    },
   },
   height: "400px",
   theme: "g90",
-}
+  data: {
+    loading: true,
+  },
+};
 
-const parseCertifications = (certifications: Certification[]) => certifications.map(
-  ({ name, total_attendees }) => ({
+const parseCertifications = (certifications: Certification[]) =>
+  certifications.map(({ name, total_attendees }) => ({
     group: name,
-    total_attendees
-  })
-);
+    total_attendees,
+  }));
 
 const MostAttendedCertifications = ({ id, isInteractive }: Props) => {
   const client = useClient();
 
   const [data, setData] = useState<any>([]);
-  // TODO: add logic for loading state
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [options, setOptions] = useState<BarChartOptions>(graphOptions);
 
   const getMostAttendedCertifications = async () => {
     try {
       setIsLoading(true);
-      const response = await client.getMostAttendedCertifications(5, "last_year");
+      const response = await client.getMostAttendedCertifications(
+        5,
+        "last_year"
+      );
       setData(response);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const certifications = useMemo(() => {
     if (!data.certifications) {
@@ -65,19 +70,22 @@ const MostAttendedCertifications = ({ id, isInteractive }: Props) => {
     getMostAttendedCertifications();
   }, []);
 
+  useEffect(() => {
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      data: { loading: isLoading },
+    }));
+  }, [isLoading]);
+
   return (
     <GraphCard
       id={id}
       title="Most Attended Certifications"
       isInteractive={isInteractive}
     >
-      <SimpleBarChart
-        data={certifications}
-        options={graphOptions}
-      />
+      <SimpleBarChart data={certifications} options={options} />
     </GraphCard>
-  )
-
-}
+  );
+};
 
 export default MostAttendedCertifications;
