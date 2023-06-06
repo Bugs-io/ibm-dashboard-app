@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
-import { MostAttendedCertifications, SearchRadar } from "@/charts";
-import GraphCard from "../GraphCard";
+import {
+  MatchedCertifications,
+  MostAttendedCertifications,
+  SearchRadar,
+} from "@/charts";
 import styles from "./styles.module.scss";
 
 interface GraphData {
@@ -57,14 +60,9 @@ const GraphGrid = () => {
       </div>
 
       <div className={styles.graphsContainer} ref={gridRef}>
-        <GraphCard
-          id="1"
-          isInteractive={isGridInteractive}
-          title="Search User Strength"
-        >
-          <SearchRadar />
-        </GraphCard>
-        <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
+        <MatchedCertifications id="1" isInteractive={isGridInteractive} />
+        <SearchRadar id="2" isInteractive={isGridInteractive} />
+        <MostAttendedCertifications id="3" isInteractive={isGridInteractive} />
       </div>
     </div>
   );
