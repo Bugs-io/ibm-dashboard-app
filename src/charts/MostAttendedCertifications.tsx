@@ -3,11 +3,7 @@ import GraphCard from "@/components/GraphCard";
 import useClient from "@/hooks/useClient";
 import { SimpleBarChart } from "@carbon/charts-react";
 import { BarChartOptions } from "@carbon/charts/interfaces";
-
-interface Props {
-  id: string;
-  isInteractive: boolean;
-}
+import { ChartProps } from "@/utils/chartOptions";
 
 type Certification = {
   name: string;
@@ -18,6 +14,7 @@ const graphOptions: BarChartOptions = {
   axes: {
     left: {
       mapsTo: "group",
+      // @ts-expect-error
       scaleType: "labels",
     },
     bottom: {
@@ -25,6 +22,7 @@ const graphOptions: BarChartOptions = {
     },
   },
   height: "400px",
+  // @ts-expect-error
   theme: "g90",
   data: {
     loading: true,
@@ -37,7 +35,7 @@ const parseCertifications = (certifications: Certification[]) =>
     total_attendees,
   }));
 
-const MostAttendedCertifications = ({ id, isInteractive }: Props) => {
+const MostAttendedCertifications = ({ id, isInteractive }: ChartProps) => {
   const client = useClient();
 
   const [data, setData] = useState<any>([]);
