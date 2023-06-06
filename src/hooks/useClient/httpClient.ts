@@ -91,6 +91,19 @@ class HTTPClient {
 
     return res;
   };
+
+  public getMostAttendedCertifications = async (limit: number, targetPeriod: string): Promise<any> => {
+    const res = await this.instance.get(
+      "/graphs/most-attended-certifications",
+      {
+        params: {
+          limit,
+          target_period: targetPeriod,
+        }
+      }
+    );
+    return res;
+  }
 }
 
 export default HTTPClient;

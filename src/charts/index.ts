@@ -1,4 +1,4 @@
-import Sample from "./Sample";
+import MostAttendedCertifications from "./MostAttendedCertifications";
 import SearchRadar from "./SearchRadar";
 
-export { Sample, SearchRadar };
+export { MostAttendedCertifications, SearchRadar };

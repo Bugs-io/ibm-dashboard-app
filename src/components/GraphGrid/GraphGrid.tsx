@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
-import { Sample, SearchRadar } from "@/charts";
-import { BarChartOptions, ChartTabularData } from "@carbon/charts/interfaces";
+import { MostAttendedCertifications, SearchRadar } from "@/charts";
 import GraphCard from "../GraphCard";
 import styles from "./styles.module.scss";
 
@@ -10,45 +9,6 @@ interface GraphData {
   id: string;
   content: string;
 }
-
-const sampleData: ChartTabularData = [
-  {
-    group: "Qty",
-    value: 65000,
-  },
-  {
-    group: "More",
-    value: 29123,
-  },
-  {
-    group: "Sold",
-    value: 35213,
-  },
-  {
-    group: "Restocking",
-    value: 51213,
-  },
-  {
-    group: "Misc",
-    value: 16932,
-  },
-];
-
-const sampleOptions: BarChartOptions = {
-  title: "",
-  axes: {
-    left: {
-      mapsTo: "value",
-    },
-    bottom: {
-      mapsTo: "group",
-      scaleType: "labels",
-    },
-  },
-  height: "400px",
-  width: "100%",
-  theme: "g90",
-};
 
 const dummyData: GraphData[] = Array.from({ length: 8 }, (_, i) => ({
   id: (i + 1).toString(),
@@ -98,24 +58,13 @@ const GraphGrid = () => {
 
       <div className={styles.graphsContainer} ref={gridRef}>
         <GraphCard
-          id="3"
-          isInteractive={isGridInteractive}
-          title="Sample Graph"
-        >
-          <Sample data={sampleData} options={sampleOptions} />
-        </GraphCard>
-        <GraphCard
           id="1"
           isInteractive={isGridInteractive}
           title="Search User Strength"
         >
           <SearchRadar />
         </GraphCard>
-        <GraphCard
-          id="2"
-          isInteractive={isGridInteractive}
-          title="Placeholder Graph"
-        />
+        <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
       </div>
     </div>
   );
