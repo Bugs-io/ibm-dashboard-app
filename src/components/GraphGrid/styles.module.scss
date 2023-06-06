@@ -22,6 +22,8 @@
   display: grid;
   grid-template-columns: 33% 33% 33%;
   gap: 24px;
+  place-content: center;
+  ;
 }
 
 @media (max-width: 1100px) {
@@ -32,6 +34,7 @@
 
 @media (max-width: 800px) {
   .graphsContainer {
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
+    min-width: 280px;
   }
 }
