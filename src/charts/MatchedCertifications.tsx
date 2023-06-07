@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
-import { PieChart } from "@carbon/charts-react";
+import { GaugeChart } from "@carbon/charts-react";
 import useClient from "@/hooks/useClient";
-import { ChartTabularData, PieChartOptions } from "@carbon/charts/interfaces";
+import { ChartTabularData, GaugeChartOptions } from "@carbon/charts/interfaces";
 import GraphCard from "@/components/GraphCard";
 import { ChartProps } from "@/utils/chartOptions";
+import utilsStyles from "../styles/utils.module.scss";
 
-const graphOptions: PieChartOptions = {
+const graphOptions: GaugeChartOptions = {
   resizable: true,
-  legend: {
+  gauge: {
     // @ts-expect-error
-    alignment: "center",
+    type: "semi",
   },
-  pie: {
-    // @ts-expect-error
-    alignment: "center",
+  height: "250px",
+  color: {
+    scale: {
+      value: "#4589FF",
+    },
   },
-  height: "400px",
   // @ts-expect-error
   theme: "g90",
-  data: {
-    loading: true,
-  },
 };
 
 interface MatchedCertificationsResponse {
@@ -31,30 +30,35 @@ interface MatchedCertificationsResponse {
 
 const parseMatchedCertification = (
   response: MatchedCertificationsResponse
-): ChartTabularData => [
-  {
-    group: "IBM's certifications",
-    value: response.total_certifications_analysed,
-  },
-  {
-    group: "Certifications that matched on famous plattforms",
-    value: response.number_of_matched_certifications,
-  },
-];
+): ChartTabularData => {
+  const percentage = Math.round(
+    (response.number_of_matched_certifications /
+      response.total_certifications_analysed) *
+      100
+  );
+  return [
+    {
+      group: "value",
+      value: percentage,
+    },
+  ];
+};
 
 const MatchedCertifications = ({ id, isInteractive }: ChartProps) => {
   const client = useClient();
-  const [data, setData] = useState<any>([]);
+  const [rawResponse, setRawResponse] = useState<any>(null);
+  const [data, setData] = useState<any[]>([{ group: "value", value: 0 }]);
   const [graphLoadingTitle, setGraphLoadingTitle] = useState<string>(
-    "Consulting third paty sources. . ."
+    "Consulting third party sources. . ."
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [options, setOptions] = useState<PieChartOptions>(graphOptions);
+  const [options, setOptions] = useState<GaugeChartOptions>(graphOptions);
 
   const getMatchedCertifications = async () => {
     try {
       const res = await client.getMatchedCertifications();
       setData(parseMatchedCertification(res));
+      setRawResponse(res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -83,7 +87,20 @@ const MatchedCertifications = ({ id, isInteractive }: ChartProps) => {
       title="Matched certifications with the industry"
       isInteractive={isInteractive}
     >
-      <PieChart data={data} options={options} />
+      <GaugeChart data={data} options={options} />
+      {rawResponse && (
+        <p style={{marginTop: 32}}>
+          Out of{" "}
+          <span className={utilsStyles.textAccentPurple}>
+            {rawResponse.total_certifications_analysed}
+          </span>{" "}
+          unique certifications on the provided internal datset, we only found{" "}
+          <span className={utilsStyles.textAccentBlue}>
+            {rawResponse.number_of_matched_certifications}
+          </span>{" "}
+          that matched with today&apos;s top industry courses.
+        </p>
+      )}
     </GraphCard>
   );
 };
