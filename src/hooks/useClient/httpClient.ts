@@ -120,6 +120,12 @@ class HTTPClient {
 
     return res;
   };
+
+  public getTopIndustryCourses = async (): Promise<any> => {
+    const res = await this.instance.get("/graphs/top-industry-courses");
+
+    return res;
+  };
 }
 
 export default HTTPClient;

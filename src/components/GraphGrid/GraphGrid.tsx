@@ -5,6 +5,7 @@ import {
   MatchedCertifications,
   MostAttendedCertifications,
   SearchRadar,
+  TopIndustryCourses,
 } from "@/charts";
 import styles from "./styles.module.scss";
 
@@ -60,9 +61,10 @@ const GraphGrid = () => {
       </div>
 
       <div className={styles.graphsContainer} ref={gridRef}>
-        <MatchedCertifications id="1" isInteractive={isGridInteractive} />
-        <SearchRadar id="2" isInteractive={isGridInteractive} />
-        <MostAttendedCertifications id="3" isInteractive={isGridInteractive} />
+        <SearchRadar id="1" isInteractive={isGridInteractive} />
+        <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
+        <MatchedCertifications id="3" isInteractive={isGridInteractive} />
+        <TopIndustryCourses id="4" isInteractive={isGridInteractive} />
       </div>
     </div>
   );
