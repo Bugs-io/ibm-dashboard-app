@@ -24,13 +24,12 @@ const graphOptions: BarChartOptions = {
   },
 };
 
+const LOADING_STATE_TEXT = "Consulting third party sources. . .";
+
 const TopIndustryCourses = ({ id, isInteractive }: ChartProps) => {
   const client = useClient();
   const [data, setData] = useState<ChartTabularData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [graphLoadingTitle, setGraphLoadingTitle] = useState<string>(
-    "Consulting third party sources. . ."
-  );
   const [options, setOptions] = useState<BarChartOptions>(graphOptions);
 
   const getTopIndustryCourses = async () => {
@@ -42,7 +41,6 @@ const TopIndustryCourses = ({ id, isInteractive }: ChartProps) => {
       console.log(error);
     } finally {
       setIsLoading(false);
-      setGraphLoadingTitle("");
     }
   };
 
@@ -54,7 +52,7 @@ const TopIndustryCourses = ({ id, isInteractive }: ChartProps) => {
     setOptions((prevOptions) => ({
       ...prevOptions,
       data: { loading: isLoading },
-      title: graphLoadingTitle,
+      title: isLoading ? LOADING_STATE_TEXT : "",
     }));
   }, [isLoading]);
 

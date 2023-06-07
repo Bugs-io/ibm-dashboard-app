@@ -21,11 +21,13 @@ const timePeriods = [
 const graphOptions: BarChartOptions = {
   axes: {
     left: {
+      title: "Certification",
       mapsTo: "group",
       // @ts-expect-error
       scaleType: "labels",
     },
     bottom: {
+      title: "Total Attendees",
       mapsTo: "total_attendees",
     },
   },
@@ -34,6 +36,9 @@ const graphOptions: BarChartOptions = {
   theme: "g90",
   data: {
     loading: true,
+  },
+  legend: {
+    enabled: false,
   },
 };
 
