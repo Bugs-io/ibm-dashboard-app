@@ -86,6 +86,7 @@ const MatchedCertifications = ({ id, isInteractive }: ChartProps) => {
       id={id}
       title="Matched certifications with the industry"
       isInteractive={isInteractive}
+      hasAI
     >
       <GaugeChart data={data} options={options} />
       {rawResponse && (

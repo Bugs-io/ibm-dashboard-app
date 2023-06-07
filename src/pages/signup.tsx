@@ -105,6 +105,7 @@ const Signup = () => {
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
         errorMsg =
+          // @ts-expect-error
           serverErrorMessages.signup[errorCode] || serverErrorMessages.default;
       }
 
@@ -183,6 +184,7 @@ const Signup = () => {
               </div>
 
               <Tooltip
+                // @ts-expect-error
                 label={
                   <PasswordStrengthMeter requirements={passwordRequirements} />
                 }

@@ -9,7 +9,6 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { useState } from "react";
 import UploadFileModal from "../UploadFileModal";
 
-
 import styles from "./styles.module.scss";
 
 const Navbar = () => {
@@ -37,9 +36,15 @@ const Navbar = () => {
             <Upload />
           </HeaderGlobalAction>
 
-          <HeaderGlobalAction aria-label="Log Out" onClick={logout}>
-            <Logout />
-          </HeaderGlobalAction>
+          <div style={{ marginRight: 16 }}>
+            <HeaderGlobalAction
+              aria-label="Log Out"
+              onClick={logout}
+              tooltipAlignment="end"
+            >
+              <Logout />
+            </HeaderGlobalAction>
+          </div>
         </HeaderGlobalBar>
       </Header>
 
@@ -49,6 +54,6 @@ const Navbar = () => {
       />
     </div>
   );
-}
+};
 
 export default Navbar;
