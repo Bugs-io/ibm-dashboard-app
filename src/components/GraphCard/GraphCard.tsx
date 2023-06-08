@@ -1,5 +1,5 @@
-// @ts-expect-error
-import { DefinitionTooltip } from "carbon-components-react";
+import { Button } from "carbon-components-react";
+import { MachineLearningModel } from "@carbon/icons-react";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -29,13 +29,13 @@ const GraphCard = ({
       <h2>{title}</h2>
       {hasAI && (
         <div className={styles.star}>
-          <DefinitionTooltip
-            definition={hasAILabel}
-            openOnHover
-            align="top-right"
-          >
-            ✨
-          </DefinitionTooltip>
+          <Button
+            hasIconOnly
+            renderIcon={() => <MachineLearningModel />}
+            iconDescription={hasAILabel}
+            kind="ghost"
+            size="sm"
+          />
         </div>
       )}
     </div>
