@@ -95,11 +95,11 @@ const MatchedCertifications = ({ id, isInteractive }: ChartProps) => {
           <span className={utilsStyles.textAccentPurple}>
             {rawResponse.total_certifications_analysed}
           </span>{" "}
-          unique certifications on the provided internal datset, we only found{" "}
+          unique certifications on the provided internal datset, only{" "}
           <span className={utilsStyles.textAccentBlue}>
             {rawResponse.number_of_matched_certifications}
           </span>{" "}
-          that matched with today&apos;s top industry courses.
+          matched today&apos;s top industry courses.
         </p>
       )}
     </GraphCard>
