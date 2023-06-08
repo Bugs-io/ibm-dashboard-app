@@ -58,7 +58,6 @@ const TopIndustryCourses = ({ id, isInteractive }: ChartProps) => {
     try {
       setIsLoading(true);
       const response = await client.getTopIndustryCourses();
-      console.log(parseCourses(response));
       setData(parseCourses(response));
     } catch (error) {
       console.log(error);

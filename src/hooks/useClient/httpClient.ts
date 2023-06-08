@@ -126,6 +126,16 @@ class HTTPClient {
 
     return res;
   };
+
+  public getCertificationCategorizedByEmployee = async (
+    employeeID: string
+  ): Promise<any> => {
+    const res = await this.instance.get(
+      `/graphs/employees/${employeeID}/certifications-categorized`
+    );
+
+    return res;
+  };
 }
 
 export default HTTPClient;

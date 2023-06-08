@@ -7,6 +7,7 @@ import {
   SearchRadar,
   TopIndustryCourses,
 } from "@/charts";
+import "@carbon/charts/styles.css";
 import styles from "./styles.module.scss";
 
 interface GraphData {

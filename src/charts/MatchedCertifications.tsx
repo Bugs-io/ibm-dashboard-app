@@ -90,7 +90,7 @@ const MatchedCertifications = ({ id, isInteractive }: ChartProps) => {
     >
       <GaugeChart data={data} options={options} />
       {rawResponse && (
-        <p style={{marginTop: 32}}>
+        <p style={{ marginTop: 32 }}>
           Out of{" "}
           <span className={utilsStyles.textAccentPurple}>
             {rawResponse.total_certifications_analysed}

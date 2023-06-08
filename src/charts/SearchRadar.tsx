@@ -1,108 +1,129 @@
-import "@carbon/charts/styles.css";
+import { useState } from "react";
 import { RadarChart } from "@carbon/charts-react";
-import { Button, TextInput } from "carbon-components-react";
+import { Button, Loading, TextInput } from "carbon-components-react";
 import { Search } from "@carbon/icons-react";
-import { RadarChartOptions } from "@carbon/charts/interfaces";
+import { ChartTabularData, RadarChartOptions } from "@carbon/charts/interfaces";
 import { ChartProps } from "@/utils/chartOptions";
 import GraphCard from "@/components/GraphCard";
+import useClient from "@/hooks/useClient";
 
-const data = [
+const initialData: ChartTabularData = [
   {
-    product: "Product 1",
-    feature: "Price",
-    score: 60,
+    uid: "IBM",
+    category: "Software Development",
+    certifications: 0,
   },
   {
-    product: "Product 1",
-    feature: "Usability",
-    score: 92,
+    uid: "IBM",
+    category: "Data Analytics",
+    certifications: 0,
   },
   {
-    product: "Product 1",
-    feature: "Availability",
-    score: 5,
+    uid: "IBM",
+    category: "Project Management",
+    certifications: 0,
   },
   {
-    product: "Product 1",
-    feature: "Performance",
-    score: 85,
+    uid: "IBM",
+    category: "Cybersecurity",
+    certifications: 0,
   },
   {
-    product: "Product 1",
-    feature: "Quality",
-    score: 60,
+    uid: "IBM",
+    category: "Cloud Computing",
+    certifications: 0,
   },
   {
-    product: "Product 2",
-    feature: "Price",
-    score: 70,
-  },
-  {
-    product: "Product 2",
-    feature: "Usability",
-    score: 63,
-  },
-  {
-    product: "Product 2",
-    feature: "Availability",
-    score: 78,
-  },
-  {
-    product: "Product 2",
-    feature: "Performance",
-    score: 50,
-  },
-  {
-    product: "Product 2",
-    feature: "Quality",
-    score: 30,
+    uid: "IBM",
+    category: "Mainframe and Systems",
+    certifications: 0,
   },
 ];
 
 const options: RadarChartOptions = {
-  title: "Radar",
+  title: "",
   radar: {
     axes: {
-      angle: "feature",
-      value: "score",
+      angle: "category",
+      value: "certifications",
     },
     // @ts-expect-error
-    alignment: "center",
+    alignment: "uid",
   },
+  alignment: "center",
   data: {
-    groupMapsTo: "product",
+    groupMapsTo: "uid",
   },
   height: "400px",
   // @ts-expect-error
   theme: "g90",
 };
 
-const SearchRadar = ({ id, isInteractive }: ChartProps) => (
-  <GraphCard id={id} isInteractive={isInteractive} title="User course strength">
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "16px",
-        paddingTop: "16px",
-      }}
+const SearchRadar = ({ id, isInteractive }: ChartProps) => {
+  const client = useClient();
+  const [data, setData] = useState<any[]>(initialData);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchData, setSearchData] = useState<string>("");
+
+  const getCategories = async () => {
+    try {
+      setIsLoading(true);
+      const res = await client.getCertificationCategorizedByEmployee(
+        searchData
+      );
+
+      setData(res);
+    } catch (error) {
+      setIsLoading(false);
+      setData(initialData);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchData(value);
+  };
+
+  return (
+    <GraphCard
+      id={id}
+      isInteractive={isInteractive}
+      title="User course strength"
     >
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <TextInput
-          id="SearchInput"
-          labelText=""
-          placeholder="Search employee by ID"
-          size="lg"
-        />
-        <Button
-          hasIconOnly
-          renderIcon={() => <Search />}
-          iconDescription="Search"
-        />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          paddingTop: "16px",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <TextInput
+            id="SearchInput"
+            labelText=""
+            placeholder="Search employee by ID"
+            size="lg"
+            onChange={(e) => handleChange(e)}
+            value={searchData}
+          />
+          <Button
+            hasIconOnly
+            renderIcon={() =>
+              isLoading ? <Loading withOverlay={false} small /> : <Search />
+            }
+            iconDescription="Search"
+            onSubmit={getCategories}
+            onClick={getCategories}
+          />
+        </div>
+
+        <RadarChart data={data} options={options} />
       </div>
-      <RadarChart data={data} options={options} />
-    </div>
-  </GraphCard>
-);
+    </GraphCard>
+  );
+};
 
 export default SearchRadar;
