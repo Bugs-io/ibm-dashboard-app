@@ -6,6 +6,7 @@ import {
   MostAttendedCertifications,
   SearchRadar,
   TopIndustryCourses,
+  CertificationsTakenOverTime
 } from "@/charts";
 import "@carbon/charts/styles.css";
 import styles from "./styles.module.scss";
@@ -66,6 +67,7 @@ const GraphGrid = () => {
         <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
         <TopIndustryCourses id="4" isInteractive={isGridInteractive} />
         <MatchedCertifications id="3" isInteractive={isGridInteractive} />
+        <CertificationsTakenOverTime id="5" isInteractive={isGridInteractive} />
       </div>
     </div>
   );
