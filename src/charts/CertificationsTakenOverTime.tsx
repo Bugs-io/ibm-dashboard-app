@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import GraphCard from "@/components/GraphCard";
 import useClient from "@/hooks/useClient";
 import { AreaChart } from "@carbon/charts-react";
+import { AreaChartOptions } from "@carbon/charts/interfaces";
 
 type Props = {
   id: string;
@@ -13,7 +14,7 @@ type YearRecord = {
   taken_certifications: number;
 }
 
-const graphOptions = {
+const graphOptions: AreaChartOptions = {
   axes: {
     bottom: {
       title: "Year",
@@ -52,7 +53,8 @@ const CertificationsTakenOverTime = ({ id, isInteractive }: Props) => {
   const client = useClient();
 
   const [data, setData] = useState<any>([]);
-  const [_, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [options, setOptions] = useState<AreaChartOptions>(graphOptions);
 
   const getCertificationsTakenOverTheYears = async () => {
     try {
@@ -78,6 +80,13 @@ const CertificationsTakenOverTime = ({ id, isInteractive }: Props) => {
     getCertificationsTakenOverTheYears();
   }, []);
 
+  useEffect(() => {
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      data: { loading: isLoading },
+    }));
+  }, [isLoading]);
+
   return (
     <GraphCard
       id={id}
@@ -86,7 +95,7 @@ const CertificationsTakenOverTime = ({ id, isInteractive }: Props) => {
     >
       <AreaChart
         data={yearRecords}
-        options={graphOptions}
+        options={options}
       />
     </GraphCard>
   )
