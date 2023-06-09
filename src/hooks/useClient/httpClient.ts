@@ -9,6 +9,37 @@ interface AxiosInstanceHeaders {
   Authorization?: string;
 }
 
+const mockCertificationsDistribution = [
+  {
+    category: "Software Development",
+    certifications: 100,
+  },
+  {
+    category: "Data Analytics",
+    certifications: 69,
+  },
+  {
+    category: "Project Management",
+    certifications: 87,
+  },
+  {
+    category: "Cybersecurity",
+    certifications: 10,
+  },
+  {
+    category: "Cloud Computing",
+    certifications: 150,
+  },
+  {
+    category: "Mainframe and Systems",
+    certifications: 73,
+  },
+  {
+    category: "Other",
+    certifications: 50,
+  }
+];
+
 class HTTPClient {
   private readonly instance: AxiosInstance;
 
@@ -142,6 +173,12 @@ class HTTPClient {
 
      return res;
    };
+
+   public getCertificationsDistribution = async (): Promise<any> => {
+      //const res = await this.instance.get("graphs/certifications-distribution");
+  
+      return mockCertificationsDistribution;
+    }
 }
 
 export default HTTPClient;
