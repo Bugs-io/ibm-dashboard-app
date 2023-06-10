@@ -136,6 +136,18 @@ class HTTPClient {
 
     return res;
   };
+
+  public getCertificationsTakenOverTheYears = async (): Promise<any> => {
+    const res = await this.instance.get("graphs/certifications-taken-over-the-years");
+
+     return res;
+   };
+
+   public getCertificationsDistribution = async (): Promise<any> => {
+      const res = await this.instance.get("graphs/certifications-distribution");
+  
+      return res;
+    }
 }
 
 export default HTTPClient;

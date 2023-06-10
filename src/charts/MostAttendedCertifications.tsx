@@ -19,9 +19,9 @@ const timePeriods = [
 ]
 
 const graphOptions: BarChartOptions = {
+  title: "",
   axes: {
     left: {
-      title: "Certification",
       mapsTo: "group",
       // @ts-expect-error
       scaleType: "labels",
@@ -96,7 +96,7 @@ const MostAttendedCertifications = ({ id, isInteractive }: ChartProps) => {
   return (
     <GraphCard
       id={id}
-      title="Most Attended Certifications"
+      title="Most attended certifications"
       isInteractive={isInteractive}
     >
       <Dropdown
