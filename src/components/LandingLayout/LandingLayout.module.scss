@@ -1,6 +1,19 @@
 .loginPage {
   min-height: 100vh;
+  background-image: url("https://user-images.githubusercontent.com/29244252/244976563-e5f39d47-ecc8-40ee-8f0e-37adf6554b3e.png");
+  background-size: 60%;
+  background-repeat: no-repeat;
   background-color: #262626;
+  background-position: left center;
+  background-position-x: 97%;
+}
+
+@media (max-width: 1056px) {
+  .loginPage {
+    background-image: url("https://user-images.githubusercontent.com/29244252/244976412-b3c7798e-cb49-405d-8194-c1472caa184c.png");
+    background-size: 45%;
+    background-position-x: 105%;
+  }
 }
 
 .gridLayout {

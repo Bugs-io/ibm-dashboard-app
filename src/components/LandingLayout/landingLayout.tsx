@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+// @ts-expect-error
 import { Theme, Grid, Column } from "carbon-components-react";
 
 import styles from "./LandingLayout.module.scss";
