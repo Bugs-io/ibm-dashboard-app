@@ -19,11 +19,13 @@ const graphOptions: AreaChartOptions = {
     bottom: {
       title: "Year",
       mapsTo: "date",
+      // @ts-expect-error
       scaleType: "time",
     },
     left: {
       title: "Taken certifications",
       mapsTo: "taken_certifications",
+      // @ts-expect-error
       scaleType: "log",
       includeZero: false
     },
@@ -40,6 +42,7 @@ const graphOptions: AreaChartOptions = {
     addSpaceOnEdges: 0,
   },
   height: "400px",
+  // @ts-expect-error
   theme: "g90",
 }
 

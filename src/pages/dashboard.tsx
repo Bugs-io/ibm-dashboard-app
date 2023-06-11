@@ -19,7 +19,7 @@ const Dashboard = () => {
         <title>IBM Strategic Dashboard</title>
       </Head>
       <Navbar handleNotification={handleSuccess} />
-      <div style={{ marginBottom: 64 }} />
+      <div style={{ marginBottom: 32 }} />
       <div className={styles.container}>
         <GraphGrid />
       </div>

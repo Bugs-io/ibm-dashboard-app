@@ -14,6 +14,7 @@ const baseGraphOptions: PieChartOptions = {
   title: "",
   resizable: true,
   height: "400px",
+  // @ts-expect-error
   theme: "g90",
 }
 
@@ -58,7 +59,7 @@ const CertificationsDistribution = ({ id, isInteractive }: ChartProps) => {
     <GraphCard
       id={id}
       isInteractive={isInteractive}
-      title="Certs. distribution"
+      title="Certifications distribution"
     >
       <PieChart
         data={data}

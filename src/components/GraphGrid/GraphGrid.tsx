@@ -53,11 +53,10 @@ const GraphGrid = () => {
 
   return (
     <div className={styles.container}>
-      <h1 style={{ marginBottom: 32 }}>Dashboard</h1>
-      <div style={{ marginBottom: 32 }}>
+      <div style={{ marginBottom: 16, display: "flex", justifyContent:"flex-end"}}>
         <Toggle
           id="toggle"
-          labelText="Move grid"
+          labelText="Move dashboard"
           size="sm"
           onToggle={(status) => setIsGridInteractive(status)}
         />

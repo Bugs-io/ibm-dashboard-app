@@ -89,7 +89,7 @@ const TopIndustryCourses = ({ id, isInteractive }: ChartProps) => {
         />
       ) : (
         // @ts-expect-error
-        <DataTable rows={data} headers={tableHeaders} isSortable>
+        <DataTable rows={data} headers={tableHeaders} isSortable size="xl" useStaticWidth>
           {
             // @ts-expect-error
             ({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (

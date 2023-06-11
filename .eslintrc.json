@@ -10,14 +10,6 @@
     "quotes": ["error", "double"],
     "no-underscore-dangle": ["error", { "allowAfterThis": true }],
     "import/prefer-default-export": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never"
-      }
-    ],
     "react/function-component-definition": [
       "off",
       {
