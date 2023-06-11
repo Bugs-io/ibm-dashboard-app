@@ -7,11 +7,15 @@ import {
 import { Upload, Logout } from "@carbon/icons-react";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useState } from "react";
-import UploadFileModal from "../UploadFileModal";
+import { UploadFileModal } from "../UploadFileModal";
 
 import styles from "./styles.module.scss";
 
-const Navbar = () => {
+interface Props {
+  handleNotification: (success: boolean) => void;
+}
+
+const Navbar = ({ handleNotification }: Props) => {
   const { clearAuth } = useAuthContext();
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
 
@@ -21,6 +25,10 @@ const Navbar = () => {
 
   const uploadFile = () => {
     setIsUploadFileModalOpen(true);
+  };
+
+  const handleModalState = (state: boolean) => {
+    setIsUploadFileModalOpen(state);
   };
 
   return (
@@ -51,6 +59,8 @@ const Navbar = () => {
       <UploadFileModal
         isActive={isUploadFileModalOpen}
         setOpen={setIsUploadFileModalOpen}
+        handleNotification={handleNotification}
+        handleModalState={handleModalState}
       />
     </div>
   );

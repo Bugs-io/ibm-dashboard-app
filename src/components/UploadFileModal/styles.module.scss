@@ -1,0 +1,15 @@
+.notification {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  padding-right: 20px;
+}
+
+.notification-container .bx--toast-notification {
+  margin: 0;
+}

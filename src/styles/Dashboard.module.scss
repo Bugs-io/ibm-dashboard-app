@@ -3,6 +3,24 @@
   margin: 16px;
 }
 
+.notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.notification-container .bx--toast-notification {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 16px;
