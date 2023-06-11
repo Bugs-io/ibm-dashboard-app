@@ -11,6 +11,8 @@ const graphOptions: GaugeChartOptions = {
   gauge: {
     // @ts-expect-error
     type: "semi",
+    // @ts-expect-error
+    alignment: "center",
   },
   height: "250px",
   color: {
@@ -18,6 +20,11 @@ const graphOptions: GaugeChartOptions = {
       value: "#4589FF",
     },
   },
+  legend: {
+    // @ts-expect-error
+    alignment: "center",
+  },
+  alignment: "center",
   // @ts-expect-error
   theme: "g90",
 };

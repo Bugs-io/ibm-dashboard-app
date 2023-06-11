@@ -20,6 +20,7 @@ import {
 } from "@/utils/searchRadar";
 import GraphCard from "@/components/GraphCard";
 import useClient from "@/hooks/useClient";
+import styles from "./styles.module.scss";
 
 const options: RadarChartOptions = {
   title: "",
@@ -107,16 +108,10 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
       id={id}
       isInteractive={isInteractive}
       title="Preparation strength"
+      hasAI
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          paddingTop: "16px",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "row" }}>
+      <div className={styles["searchRadar-container"]}>
+        <div className={styles["searchRadar-searchBar"]}>
           <TextInput
             id="SearchInput"
             labelText=""
@@ -142,9 +137,7 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
         </div>
 
         {isLoading ? (
-          <div
-            style={{ display: "grid", placeItems: "center", height: "350px" }}
-          >
+          <div className={styles["searchRadar-loading"]}>
             <Loading withOverlay={false} />
           </div>
         ) : (
@@ -152,21 +145,20 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
         )}
 
         <Accordion>
-          <AccordionItem title="Categories Guide" style={{ padding: 0 }}>
+          <AccordionItem title="Categories Guide">
             {Object.keys(GRAPH_TITLES).map((title) => (
               <div
                 key={`tag_${GRAPH_TITLES[title]}`}
-                style={{ marginBottom: 4 }}
+                className={styles["searchRadar-tagCointainer"]}
               >
-                <Theme
-                  theme="white"
-                  style={{ display: "inline", backgroundColor: "#262623" }}
-                >
+                <Theme theme="white" className={styles["searchRadar-tagTheme"]}>
                   <Tag type="purple" size="sm">
                     {GRAPH_TITLES[title]}
                   </Tag>
                 </Theme>
-                <span style={{ fontSize: 14 }}>: {title}</span>
+                <span className={styles["searchRadar-tagDescription"]}>
+                  : {title}
+                </span>
               </div>
             ))}
           </AccordionItem>

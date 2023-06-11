@@ -34,7 +34,7 @@ const GraphCard = ({
             renderIcon={() => <MachineLearningModel />}
             iconDescription={hasAILabel}
             kind="ghost"
-            size="sm"
+            size="xl"
           />
         </div>
       )}

@@ -6,9 +6,9 @@ import { PieChartOptions } from "@carbon/charts/interfaces";
 import { useEffect, useState } from "react";
 
 type CertificationCategory = {
-  category: string
-  certifications: number
-}
+  category: string;
+  certifications: number;
+};
 
 const baseGraphOptions: PieChartOptions = {
   title: "",
@@ -16,21 +16,31 @@ const baseGraphOptions: PieChartOptions = {
   height: "400px",
   // @ts-expect-error
   theme: "g90",
-}
+  legend: {
+    // @ts-expect-error
+    alignment: "center",
+  },
+  pie: {
+    // @ts-expect-error
+    alignment: "center",
+  },
+};
 
-const parseCertificationsDistribution = (certificationCategories: CertificationCategory[]) =>
+const parseCertificationsDistribution = (
+  certificationCategories: CertificationCategory[]
+) =>
   certificationCategories.map(({ category, certifications }) => ({
     group: category,
     value: certifications,
-  })
-);
+  }));
 
 const CertificationsDistribution = ({ id, isInteractive }: ChartProps) => {
   const client = useClient();
 
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [graphOptions, setGraphOptions] = useState<PieChartOptions>(baseGraphOptions);
+  const [graphOptions, setGraphOptions] =
+    useState<PieChartOptions>(baseGraphOptions);
 
   const getCertificationsDistribution = async () => {
     try {
@@ -42,7 +52,7 @@ const CertificationsDistribution = ({ id, isInteractive }: ChartProps) => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     getCertificationsDistribution();
@@ -51,7 +61,7 @@ const CertificationsDistribution = ({ id, isInteractive }: ChartProps) => {
   useEffect(() => {
     setGraphOptions((prevGraphOptions) => ({
       ...prevGraphOptions,
-      data: { loading: isLoading }
+      data: { loading: isLoading },
     }));
   }, [isLoading]);
 
@@ -60,13 +70,11 @@ const CertificationsDistribution = ({ id, isInteractive }: ChartProps) => {
       id={id}
       isInteractive={isInteractive}
       title="Certifications distribution"
+      hasAI
     >
-      <PieChart
-        data={data}
-        options={graphOptions}
-      />
+      <PieChart data={data} options={graphOptions} />
     </GraphCard>
-  )
-}
+  );
+};
 
 export default CertificationsDistribution;

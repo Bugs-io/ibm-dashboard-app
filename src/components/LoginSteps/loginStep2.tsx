@@ -4,9 +4,11 @@ import {
   Form,
   TextInput,
   InlineLoading,
+  InlineLoadingStatus,
 } from "carbon-components-react";
 import styles from "@/styles/LandingForm.module.scss";
 import utilStyle from "@/styles/utils.module.scss";
+import loginStyles from "./style.module.scss";
 import CarbonLink from "../CarbonLink";
 
 interface Props {
@@ -15,7 +17,7 @@ interface Props {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputError: string;
   loginData: { email: string; password: string };
-  loadingStatus: string | undefined;
+  loadingStatus: InlineLoadingStatus | undefined;
 }
 
 const LoginStep2 = ({
@@ -26,62 +28,65 @@ const LoginStep2 = ({
   loadingStatus,
   switchLoginStep,
 }: Props) => (
-    <div className={styles.loginForm}>
-      <h2 style={{ marginBottom: 4 }}>Log in</h2>
-      <h4 style={{ marginBottom: 40, wordWrap: "break-word" }}>
-        Logging in as{" "}
-        <span className={utilStyle.bold}>{`${loginData.email} `}</span>
-        <CarbonLink
-          onClick={() => switchLoginStep()}
-          className={styles.linkButton}
-        >
-          Not you?
-        </CarbonLink>
-      </h4>
+  <div className={styles.loginForm}>
+    <h2 className={loginStyles.title}>Log in</h2>
+    <h4 className={loginStyles.subtitleStep2}>
+      Logging in as{" "}
+      <span className={utilStyle.bold}>{`${loginData.email} `}</span>
+      <CarbonLink
+        onClick={() => switchLoginStep()}
+        className={styles.linkButton}
+      >
+        Not you?
+      </CarbonLink>
+    </h4>
 
-      <div className={styles.divider} />
-      <Form>
-        <div className={styles.form}>
-          <div className={styles.inputLabelContainer}>
-            <p>Password</p>
+    <div className={styles.divider} />
+    <Form>
+      <div className={styles.form}>
+        <div className={styles.inputLabelContainer}>
+          <p>Password</p>
 
-            <p className={styles.inputLabelLink}>
-              <CarbonLink
-                href="https://www.ibm.com/account/reg/us-en/reset-password"
-                target="_blank"
-              >
-                Forgot password?
-              </CarbonLink>
-            </p>
-          </div>
-
-          <div>
-            <TextInput.PasswordInput
-              id="login-password"
-              name="password"
-              value={loginData.password}
-              labelText="Password"
-              hideLabel
-              onChange={(e) => handleChange(e)}
-              invalid={inputError !== ""}
-              invalidText={inputError}
-              autoFocus
-            />
-          </div>
+          <p className={styles.inputLabelLink}>
+            <CarbonLink
+              href="https://www.ibm.com/account/reg/us-en/reset-password"
+              target="_blank"
+            >
+              Forgot password?
+            </CarbonLink>
+          </p>
         </div>
-        <Button
-          kind="primary"
-          renderIcon={ArrowRight}
-          onClick={(e) => handleSubmit(e)}
-          className={styles.buttonContainer}
-          type="submit"
-        >
-          <div className={styles.buttonContent}>
-            <p>Log in </p>
-            <InlineLoading style={{ width: "auto" }} status={loadingStatus} />
-          </div>
-        </Button>
-      </Form>
-    </div>
-  )
+
+        <div>
+          <TextInput.PasswordInput
+            id="login-password"
+            name="password"
+            value={loginData.password}
+            labelText="Password"
+            hideLabel
+            onChange={(e) => handleChange(e)}
+            invalid={inputError !== ""}
+            invalidText={inputError}
+            autoFocus
+          />
+        </div>
+      </div>
+      <Button
+        kind="primary"
+        renderIcon={ArrowRight}
+        onClick={(e) => handleSubmit(e)}
+        className={styles.buttonContainer}
+        type="submit"
+      >
+        <div className={styles.buttonContent}>
+          <p>Log in</p>
+          <InlineLoading
+            className={loginStyles.loading}
+            status={loadingStatus}
+          />
+        </div>
+      </Button>
+    </Form>
+  </div>
+);
 export default LoginStep2;
