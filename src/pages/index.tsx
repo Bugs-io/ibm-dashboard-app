@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.scss";
-import Dashboard from "./dashboard";
+import Login from "./login";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Dashboard />
+        <Login />
       </main>
     </>
   );

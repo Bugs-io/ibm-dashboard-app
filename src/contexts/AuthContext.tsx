@@ -42,6 +42,12 @@ const AuthProvider = ({ children }: Props) => {
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    setAccessToken("");
+  };
+
   useEffect(() => {
     const loadUserFromLocalStorage = async () => {
       const token = localStorage.getItem("token");
@@ -55,16 +61,13 @@ const AuthProvider = ({ children }: Props) => {
             setUser(fetchedUser);
             setIsAuthenticated(true);
           } else {
-            setIsAuthenticated(false);
-            setUser(null);
+            logout();
           }
         } catch (error) {
-          setIsAuthenticated(false);
-          setUser(null);
+          logout();
         }
       } else {
-        setIsAuthenticated(false);
-        setUser(null);
+        logout();
       }
 
       setIsLoadingAuth(false);

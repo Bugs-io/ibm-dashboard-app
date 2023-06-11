@@ -1,3 +1,4 @@
 import UploadFileModal from "./UploadFileModal";
+import Notification from "./Notification";
 
-export default UploadFileModal;
+export { UploadFileModal, Notification };

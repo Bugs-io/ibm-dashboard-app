@@ -95,6 +95,7 @@ const Login = () => {
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
         errorMsg =
+          // @ts-expect-error
           serverErrorMessages.login[errorCode] || serverErrorMessages.default;
       }
     }

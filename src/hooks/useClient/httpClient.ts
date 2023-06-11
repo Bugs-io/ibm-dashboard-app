@@ -29,6 +29,7 @@ class HTTPClient {
       headers.Authorization = `Bearer ${this.token}`;
     }
 
+    // @ts-expect-error
     this.instance = axios.create({ baseURL, headers });
 
     this._initializeResponseReceptor();
@@ -72,7 +73,12 @@ class HTTPClient {
       id: string;
       emailResponse: string;
       access: string;
-    }>("/signup", { email, password, first_name: firstName, last_name: lastName });
+    }>("/signup", {
+      email,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+    });
     return res;
   };
 
@@ -83,11 +89,70 @@ class HTTPClient {
 
   public uploadInternalDataset = async (formData: FormData): Promise<any> => {
     const res = await this.instance.post("/upload-internal-dataset", formData, {
+      // @ts-expect-error
       headers: {
         ...this.instance.defaults.headers,
         "Content-Type": "multipart/form-data",
       },
     });
+
+    return res;
+  };
+
+  public getMostAttendedCertifications = async (
+    limit: number,
+    targetPeriod: string
+  ): Promise<any> => {
+    const res = await this.instance.get(
+      "/graphs/most-attended-certifications",
+      {
+        params: {
+          limit,
+          target_period: targetPeriod,
+        },
+      }
+    );
+    return res;
+  };
+
+  public getMatchedCertifications = async (): Promise<any> => {
+    const res = await this.instance.get("/graphs/matched-certifications");
+
+    return res;
+  };
+
+  public getTopIndustryCourses = async (): Promise<any> => {
+    const res = await this.instance.get("/graphs/top-industry-courses");
+
+    return res;
+  };
+
+  public getCertificationsCategorized = async (): Promise<any> => {
+    const res = await this.instance.get("/graphs/certifications-categorized");
+
+    return res;
+  };
+
+  public getCertificationsCategorizedByEmployee = async (
+    employeeID: string
+  ): Promise<any> => {
+    const res = await this.instance.get(
+      `/graphs/employees/${employeeID}/certifications-categorized`
+    );
+
+    return res;
+  };
+
+  public getCertificationsTakenOverTheYears = async (): Promise<any> => {
+    const res = await this.instance.get(
+      "graphs/certifications-taken-over-the-years"
+    );
+
+    return res;
+  };
+
+  public getCertificationsDistribution = async (): Promise<any> => {
+    const res = await this.instance.get("graphs/certifications-distribution");
 
     return res;
   };

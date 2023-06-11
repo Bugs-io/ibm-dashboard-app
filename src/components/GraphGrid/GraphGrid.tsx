@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import Sortable from "sortablejs";
 import { Toggle } from "carbon-components-react";
-import GraphCard from "../GraphCard";
+import {
+  MatchedCertifications,
+  MostAttendedCertifications,
+  SearchRadar,
+  TopIndustryCourses,
+  CertificationsTakenOverTime,
+  CertificationsDistribution
+} from "@/charts";
+import "@carbon/charts/styles.css";
 import styles from "./styles.module.scss";
 
 interface GraphData {
@@ -17,8 +25,8 @@ const dummyData: GraphData[] = Array.from({ length: 8 }, (_, i) => ({
 const GraphGrid = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const sortableJsRef = useRef<Sortable | null>(null);
-  const [data, setData] = useState<GraphData[]>(dummyData);
   const [isGridInteractive, setIsGridInteractive] = useState<boolean>(false);
+  const [data, setData] = useState<GraphData[]>(dummyData);
 
   const onListChange = () => {
     /* Use the following when saving to localStorage
@@ -45,24 +53,22 @@ const GraphGrid = () => {
 
   return (
     <div className={styles.container}>
-      <h1 style={{ marginBottom: 32 }}>Dashboard</h1>
-      <div style={{ marginBottom: 32 }}>
+      <div style={{ marginBottom: 16, display: "flex", justifyContent:"flex-end"}}>
         <Toggle
           id="toggle"
-          labelText="Move grid"
+          labelText="Move dashboard"
           size="sm"
           onToggle={(status) => setIsGridInteractive(status)}
         />
       </div>
+
       <div className={styles.graphsContainer} ref={gridRef}>
-        {data.map(({ id, content }) => (
-          <GraphCard
-            id={id}
-            key={id}
-            title={content}
-            isInteractive={isGridInteractive}
-          />
-        ))}
+        <SearchRadar id="1" isInteractive={isGridInteractive} />
+        <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
+        <TopIndustryCourses id="3" isInteractive={isGridInteractive} />
+        <MatchedCertifications id="4" isInteractive={isGridInteractive} />
+        <CertificationsTakenOverTime id="5" isInteractive={isGridInteractive} />
+        <CertificationsDistribution id="6" isInteractive={isGridInteractive}/>
       </div>
     </div>
   );

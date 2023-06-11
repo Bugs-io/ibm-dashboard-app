@@ -94,8 +94,8 @@ const Signup = () => {
       setLoadingStatus("active");
       await client.signup(
         userData.email,
-        userData.firstName,
-        userData.lastName,
+        userData.firstName!,
+        userData.lastName!,
         userData.password
       );
       setLoadingStatus("inactive");
@@ -105,6 +105,7 @@ const Signup = () => {
       if (error instanceof AxiosError) {
         const errorCode = error.response?.data.error_code;
         errorMsg =
+          // @ts-expect-error
           serverErrorMessages.signup[errorCode] || serverErrorMessages.default;
       }
 
@@ -175,7 +176,7 @@ const Signup = () => {
                   value={userData.lastName}
                   onChange={(e) => handleChange(e)}
                   onBlur={() =>
-                    isFirstNameValid(userData.lastName!, setFormErrors)
+                    isLastNameValid(userData.lastName!, setFormErrors)
                   }
                   invalid={formErrors.lastName !== ""}
                   invalidText={formErrors.lastName}
@@ -183,6 +184,7 @@ const Signup = () => {
               </div>
 
               <Tooltip
+                // @ts-expect-error
                 label={
                   <PasswordStrengthMeter requirements={passwordRequirements} />
                 }

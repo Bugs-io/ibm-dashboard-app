@@ -1,14 +1,19 @@
-import useClient from "@/hooks/useClient";
+import { useEffect, useState } from "react";
+import { serverErrorMessages } from "@/utils/serverErrorMessages";
+import { AxiosError } from "axios";
 import {
   FileUploaderDropContainer,
   FileUploaderItem,
+  Loading,
   Modal,
 } from "carbon-components-react";
-import { useEffect, useState } from "react";
+import useClient from "@/hooks/useClient";
 
 interface Props {
   isActive: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleNotification: (success: boolean) => void;
+  handleModalState: (state: boolean) => void;
 }
 
 interface Error {
@@ -25,13 +30,19 @@ const EXTENSION_ERROR: Error = {
   subject: "Please make sure to be using .xlsx file.",
 };
 
-const UploadFileModal = ({ isActive, setOpen }: Props) => {
+const UploadFileModal = ({
+  isActive,
+  setOpen,
+  handleNotification,
+  handleModalState,
+}: Props) => {
   const client = useClient();
-
   const [file, setFile] = useState<File>();
   const [error, setError] = useState<Error>(EXTENSION_ERROR);
   const [isPrimaryButtonDisabled, setIsPrimaryButtonDisabled] =
-    useState<Boolean>(true);
+    useState<boolean>(true);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsPrimaryButtonDisabled(!(file && !error.isInvalid));
@@ -48,6 +59,8 @@ const UploadFileModal = ({ isActive, setOpen }: Props) => {
 
     setError((prevError) => ({
       ...prevError,
+      body: EXTENSION_ERROR.body,
+      subject: EXTENSION_ERROR.subject,
       isInvalid: hasError,
     }));
 
@@ -68,8 +81,33 @@ const UploadFileModal = ({ isActive, setOpen }: Props) => {
     const formData = new FormData();
     formData.append("file", file!);
 
-    const res = await client.uploadInternalDataset(formData);
-    console.log(res);
+    try {
+      setIsLoading(true);
+
+      await client.uploadInternalDataset(formData);
+
+      setIsLoading(false);
+
+      handleNotification(true);
+      handleModalState(false);
+      setFile(undefined);
+    } catch (serverError) {
+      setIsLoading(false);
+      let errorMsg = "";
+      if (serverError instanceof AxiosError) {
+        const errorCode = serverError.response?.data.error_code;
+        errorMsg =
+          // @ts-expect-error
+          serverErrorMessages.uploadFile[errorCode] ||
+          serverErrorMessages.default;
+      }
+      setError((prevError) => ({
+        ...prevError,
+        subject: errorMsg,
+        body: "Make sure the content of the file follows the correct format.",
+        isInvalid: true,
+      }));
+    }
   };
 
   return (
@@ -114,9 +152,11 @@ const UploadFileModal = ({ isActive, setOpen }: Props) => {
             invalid={error.isInvalid}
           />
         )}
+
+        {isLoading && <Loading />}
       </div>
     </Modal>
   );
-}
+};
 
 export default UploadFileModal;
