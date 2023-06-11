@@ -1,44 +1,25 @@
 import { useState } from "react";
 import { RadarChart } from "@carbon/charts-react";
-import { Button, Loading, TextInput } from "carbon-components-react";
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Loading,
+  Tag,
+  TextInput,
+  // @ts-expect-error
+  Theme,
+} from "carbon-components-react";
 import { Search } from "@carbon/icons-react";
-import { ChartTabularData, RadarChartOptions } from "@carbon/charts/interfaces";
+import { RadarChartOptions } from "@carbon/charts/interfaces";
 import { ChartProps } from "@/utils/chartOptions";
+import {
+  CertificationItem,
+  GRAPH_TITLES,
+  initialData,
+} from "@/utils/searchRadar";
 import GraphCard from "@/components/GraphCard";
 import useClient from "@/hooks/useClient";
-
-const initialData: ChartTabularData = [
-  {
-    uid: "IBM",
-    category: "Software Development",
-    certifications: 0,
-  },
-  {
-    uid: "IBM",
-    category: "Data Analytics",
-    certifications: 0,
-  },
-  {
-    uid: "IBM",
-    category: "Project Management",
-    certifications: 0,
-  },
-  {
-    uid: "IBM",
-    category: "Cybersecurity",
-    certifications: 0,
-  },
-  {
-    uid: "IBM",
-    category: "Cloud Computing",
-    certifications: 0,
-  },
-  {
-    uid: "IBM",
-    category: "Mainframe and Systems",
-    certifications: 0,
-  },
-];
 
 const options: RadarChartOptions = {
   title: "",
@@ -48,15 +29,26 @@ const options: RadarChartOptions = {
       value: "certifications",
     },
     // @ts-expect-error
-    alignment: "uid",
+    alignment: "center",
   },
-  alignment: "center",
   data: {
     groupMapsTo: "uid",
   },
   height: "400px",
   // @ts-expect-error
   theme: "g90",
+};
+
+const parseResponse = (response: CertificationItem[]) => {
+  const parsed = response.map((certification) => {
+    const alteredName: string = GRAPH_TITLES[certification.category];
+    return {
+      ...certification,
+      category: alteredName,
+    };
+  });
+
+  return parsed;
 };
 
 const SearchRadar = ({ id, isInteractive }: ChartProps) => {
@@ -72,7 +64,7 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
         searchData
       );
 
-      setData(res);
+      setData(parseResponse(res));
     } catch (error) {
       setIsLoading(false);
       setData(initialData);
@@ -121,6 +113,26 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
         </div>
 
         <RadarChart data={data} options={options} />
+        <Accordion>
+          <AccordionItem title="Categories Guide" style={{ padding: 0 }}>
+            {Object.keys(GRAPH_TITLES).map((title) => (
+              <div
+                key={`tag_${GRAPH_TITLES[title]}`}
+                style={{ marginBottom: 4 }}
+              >
+                <Theme
+                  theme="white"
+                  style={{ display: "inline", backgroundColor: "#262623" }}
+                >
+                  <Tag type="purple" size="sm">
+                    {GRAPH_TITLES[title]}
+                  </Tag>
+                </Theme>
+                <span style={{ fontSize: 14 }}>: {title}</span>
+              </div>
+            ))}
+          </AccordionItem>
+        </Accordion>
       </div>
     </GraphCard>
   );
