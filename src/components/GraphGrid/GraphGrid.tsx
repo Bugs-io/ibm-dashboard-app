@@ -66,8 +66,8 @@ const GraphGrid = () => {
       <div className={styles.graphsContainer} ref={gridRef}>
         <SearchRadar id="1" isInteractive={isGridInteractive} />
         <MostAttendedCertifications id="2" isInteractive={isGridInteractive} />
-        <TopIndustryCourses id="4" isInteractive={isGridInteractive} />
-        <MatchedCertifications id="3" isInteractive={isGridInteractive} />
+        <TopIndustryCourses id="3" isInteractive={isGridInteractive} />
+        <MatchedCertifications id="4" isInteractive={isGridInteractive} />
         <CertificationsTakenOverTime id="5" isInteractive={isGridInteractive} />
         <CertificationsDistribution id="6" isInteractive={isGridInteractive}/>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RadarChart } from "@carbon/charts-react";
 import {
   Accordion,
@@ -54,22 +54,37 @@ const parseResponse = (response: CertificationItem[]) => {
 const SearchRadar = ({ id, isInteractive }: ChartProps) => {
   const client = useClient();
   const [data, setData] = useState<any[]>(initialData);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [IBMGeneralData, setIBMGeneralData] = useState<any[]>(initialData);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
   const [searchData, setSearchData] = useState<string>("");
 
   const getCategories = async () => {
     try {
       setIsLoading(true);
-      const res = await client.getCertificationCategorizedByEmployee(
-        searchData
-      );
-
-      setData(parseResponse(res));
+      const res = await client.getCertificationsCategorized();
+      const parsedResponse = parseResponse(res);
+      setData(parsedResponse);
+      setIBMGeneralData(parsedResponse);
     } catch (error) {
-      setIsLoading(false);
-      setData(initialData);
+      console.log(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const getCategoriesFromEmployee = async () => {
+    try {
+      setIsSearchLoading(true);
+      const res = await client.getCertificationsCategorizedByEmployee(
+        searchData
+      );
+      setData(parseResponse(res));
+    } catch (error) {
+      setIsSearchLoading(false);
+      setData(IBMGeneralData);
+    } finally {
+      setIsSearchLoading(false);
     }
   };
 
@@ -78,11 +93,20 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
     setSearchData(value);
   };
 
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    getCategoriesFromEmployee();
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <GraphCard
       id={id}
       isInteractive={isInteractive}
-      title="User course strength"
+      title="Preparation strength"
     >
       <div
         style={{
@@ -100,19 +124,33 @@ const SearchRadar = ({ id, isInteractive }: ChartProps) => {
             size="lg"
             onChange={(e) => handleChange(e)}
             value={searchData}
+            onKeyDown={(e) => handleEnter(e)}
           />
           <Button
             hasIconOnly
             renderIcon={() =>
-              isLoading ? <Loading withOverlay={false} small /> : <Search />
+              isSearchLoading ? (
+                <Loading withOverlay={false} small />
+              ) : (
+                <Search />
+              )
             }
             iconDescription="Search"
-            onSubmit={getCategories}
-            onClick={getCategories}
+            onSubmit={getCategoriesFromEmployee}
+            onClick={getCategoriesFromEmployee}
           />
         </div>
 
-        <RadarChart data={data} options={options} />
+        {isLoading ? (
+          <div
+            style={{ display: "grid", placeItems: "center", height: "350px" }}
+          >
+            <Loading withOverlay={false} />
+          </div>
+        ) : (
+          <RadarChart data={data} options={options} />
+        )}
+
         <Accordion>
           <AccordionItem title="Categories Guide" style={{ padding: 0 }}>
             {Object.keys(GRAPH_TITLES).map((title) => (

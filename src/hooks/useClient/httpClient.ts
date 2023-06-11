@@ -127,7 +127,13 @@ class HTTPClient {
     return res;
   };
 
-  public getCertificationCategorizedByEmployee = async (
+  public getCertificationsCategorized = async (): Promise<any> => {
+    const res = await this.instance.get("/graphs/certifications-categorized");
+
+    return res;
+  };
+
+  public getCertificationsCategorizedByEmployee = async (
     employeeID: string
   ): Promise<any> => {
     const res = await this.instance.get(
@@ -138,16 +144,18 @@ class HTTPClient {
   };
 
   public getCertificationsTakenOverTheYears = async (): Promise<any> => {
-    const res = await this.instance.get("graphs/certifications-taken-over-the-years");
+    const res = await this.instance.get(
+      "graphs/certifications-taken-over-the-years"
+    );
 
-     return res;
-   };
+    return res;
+  };
 
-   public getCertificationsDistribution = async (): Promise<any> => {
-      const res = await this.instance.get("graphs/certifications-distribution");
-  
-      return res;
-    }
+  public getCertificationsDistribution = async (): Promise<any> => {
+    const res = await this.instance.get("graphs/certifications-distribution");
+
+    return res;
+  };
 }
 
 export default HTTPClient;
