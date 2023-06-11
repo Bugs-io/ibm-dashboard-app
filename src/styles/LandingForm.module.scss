@@ -1,0 +1,47 @@
+.loginForm {
+  margin-top: 160px;
+  margin-left: 36px;
+  margin-right: 36px;
+}
+
+.linkButton {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.divider {
+  height: 2px;
+  background-color: #292929;
+  margin-bottom: 16px;
+}
+
+.inputLabelContainer {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputLabelLink {
+  margin-left: 16px;
+  text-align: end;
+}
+
+.buttonContainer {
+  min-width: 100%;
+  margin-bottom: 16px;
+}
+
+.buttonContent {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  gap: 16px;
+  place-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}

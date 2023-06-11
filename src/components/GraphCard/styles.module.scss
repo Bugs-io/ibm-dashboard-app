@@ -1,0 +1,23 @@
+.card {
+  background-color: #262626;
+  padding: 32px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+}
+
+.star {
+  margin-left: auto;
+}
+
+.star:hover {
+  animation: pop 0.3s linear 1;
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.2);
+  }
+}

@@ -1,0 +1,30 @@
+.searchRadar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.searchRadar-searchBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchRadar-loading {
+  display: grid;
+  place-content: center;
+  height: 350px;
+}
+
+.searchRadar-tagCointainer {
+  margin-bottom: 4px;
+}
+
+.searchRadar-tagTheme {
+  display: inline;
+  background-color: #262623;
+}
+
+.searchRadar-tagDescription {
+  font-size: 14px;
+}
