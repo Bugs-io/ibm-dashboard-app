@@ -1,38 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# IBM Strategic Dashboard | Client
 
-## Getting Started
+This is the client side of a full stack application made in collaboration with IBM to improve the data analytics when it comes to their employee's certifications, courses, badges, and overall the offer of IBM's educational content to their human resource.
 
-First, run the development server:
+## Next JS
+It uses NextJS and server-side rendering to display the same dashboard to exclusively IBM employees with an executive or related roles capable of making decisions with this information.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Pre-requisites
+For the Web App to work as expected it is crucial to have running the following services:
+- [The API](https://github.com/Bugs-io/ibm-dashboard-api)
+- [The data analysis tool](https://github.com/Bugs-io/ibm-dashboard-data-analysis)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Of course, it is also needed to have the LTS version of NPM.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Installation
+1. Download the repository.
+2. Run the external services mentioned above.
+3. run `npm install` to install all the dependencies like NextJS itself, Carbon Design, Carbon Charts, and more.
+4. Set up environmental variables by creating a file called `.env.local` in the root of the project and create a variable called `NEXT_PUBLIC_API_URL` and set it to the URL of where the API instance mentioned above is running. There is a simple `.env.local.example` file to ilustrate this.
+5. Once every dependency is install run `npm run dev`.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This is going to start a server on `localhost:3000`. When accesed to this address from a broswer, the web app is going to be compiled by the server and then sent to the browser.
