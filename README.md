@@ -3,9 +3,9 @@
 This is the client side of a full stack application made in collaboration with IBM to improve the data analytics when it comes to their employee's certifications, courses, badges, and overall the offer of IBM's educational content to their human resource.
 
 ## Next JS
-It uses NextJS and server-side rendering to display the same dashboard to exclusively IBM employees with an executive or related roles capable of making decisions with this information.
+It uses NextJS and server-side rendering to display the same dashboard to exclusively IBM employees with executive or related roles capable of making decisions with this information.
 
-## Pre-requisites
+## Prerequisites
 For the Web App to work as expected it is crucial to have running the following services:
 - [The API](https://github.com/Bugs-io/ibm-dashboard-api)
 - [The data analysis tool](https://github.com/Bugs-io/ibm-dashboard-data-analysis)
